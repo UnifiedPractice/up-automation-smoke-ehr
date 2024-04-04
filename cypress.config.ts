@@ -4,6 +4,10 @@ export default defineConfig({
   video: true,
   projectId: "5euxj8",
   pageLoadTimeout: 140000,
+  retries: {
+    runMode: 900,
+    openMode: 900
+  },
   // retries: {
   //   runMode: 900,
   //   openMode: 900
