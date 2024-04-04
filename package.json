@@ -1,0 +1,12 @@
+{
+  "devDependencies": {
+    "cypress": "^13.7.2",
+    "cypress-localstorage-commands": "^2.2.5",
+    "cypress-wait-until": "^3.0.1",
+    "typescript": "^5.4.3"
+  },
+  "dependencies": {
+    "date-fns": "^3.6.0",
+    "unique-names-generator": "^4.7.1"
+  }
+}
