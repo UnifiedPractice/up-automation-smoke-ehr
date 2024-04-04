@@ -25,6 +25,11 @@
         cy.contains('Login').click();
     }
 
+     loginPPNCFPCCPE(): void{
+         cy.get(this.username).type('PPNCFPCCPE');
+         cy.get(this.password).type('password');
+         cy.contains('Login').click();
+     }
      loginAutomationUniversity(): void{
          cy.get(this.username).type('automationcypressuniversity');
          cy.get(this.password).type('password');

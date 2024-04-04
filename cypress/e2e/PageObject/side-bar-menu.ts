@@ -11,7 +11,10 @@ class SideBarNavigate  {
     }
 
     selectReports(name: string) : void {
-        cy.wait(2500).get(this.level1Selector).eq(4).click({force:true});
+        cy.wait(2500).get(this.level2Selector).contains(name).click({force:true});
+    }
+
+    selectBilling(name: string) : void {
         cy.wait(2500).get(this.level2Selector).contains(name).click({force:true});
     }
     extendMenu() : void{

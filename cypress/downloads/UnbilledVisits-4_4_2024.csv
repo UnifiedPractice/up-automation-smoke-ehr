@@ -1,0 +1,4 @@
+﻿Unbilled Visits Report - Denver Clinic - 4/4/2024
+Date range:[4/1/2024 - 4/30/2024]
+
+AppointmentDate,PatientName,PatientDateOfBirth,Provider,ICD,CPT,AppointmentType,ClaimCreatedStatus,IntakeStatus,

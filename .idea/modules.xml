@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/up-automation-smoke-ehr-alex.iml" filepath="$PROJECT_DIR$/.idea/up-automation-smoke-ehr-alex.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/up-automation-smoke-ehr.iml" filepath="$PROJECT_DIR$/.idea/up-automation-smoke-ehr.iml" />
     </modules>
   </component>
 </project>

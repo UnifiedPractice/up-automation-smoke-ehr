@@ -1,7 +1,8 @@
 import { defineConfig } from 'cypress'
 
 export default defineConfig({
-  video: false,
+  video: true,
+  projectId: "5euxj8",
   pageLoadTimeout: 140000,
   // retries: {
   //   runMode: 900,
@@ -14,7 +15,10 @@ export default defineConfig({
       return require('./cypress/plugins/index.js')(on, config)
     },
     supportFile: false,
-    specPattern: 'cypress/e2e/Tests/*.spec.ts',
+    specPattern: [
+        'cypress/e2e/Tests/Reports/*.spec.ts',
+        'cypress/e2e/Tests/Calendar/*.spec.ts',
+        ]
   },
 })
 
