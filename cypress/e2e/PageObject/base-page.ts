@@ -9,8 +9,8 @@ import SideBarNavigate from "./side-bar-menu";
 
 class BasePage {
 
-public formSelector: string = '.form-group';
-public sliderSelector: string = '.checkboxSlider';
+public formSelector: string = '.row.justify-content-between.align-items-center';
+public sliderSelector: string = '.o-switch';
 public exportSelector: string = '.btn.btn-outline.btn-primary.custom-transparent-btn'
 
 
@@ -40,9 +40,15 @@ public exportSelector: string = '.btn.btn-outline.btn-primary.custom-transparent
           })
      }
 
-     exportElement(): void{
+    completeField(name: string, content: any): void
+    {
+        cy.contains(name).next().click().type(content, { force: true });
+        cy.wait(2000);
+    }
+
+    exportElement(): void{
         cy.get(this.exportSelector).click().wait(3000);
-     }
+    }
      backtoEHR(): void{
         cy.visit('https://staging.unifiedpractice.com/Public/Dashboard/Index')
      }
