@@ -21,6 +21,9 @@ class PatientList {
     private sendInviteButtonSelector : string = '.js-sendInvite'
     private buttonPrimarySelector: string = '.btn-primary';
     private mainMenuPatientSelector: string = '.main-menu';
+    private beginIntakeButton : string = '.intake-button.intake-none.js-beginIntake';
+    private onTimeButton: string = '.intake-arrive-status.intake-arrive-ontime.js-intakeActionOnTime';
+    private patientSelect: string = '.appointment-details';
 
     searchPatient(name: any): void{
         cy.get('.ui-state-default.ui-corner-top').eq(1).click()
@@ -109,6 +112,15 @@ class PatientList {
         )
 
     }
+
+    beginIntakeAndCloseAndSign() : void {
+        cy.wait(1000).get(this.patientSelect).eq(0).click()
+        cy.wait(1500).get(this.beginIntakeButton).eq(0).click();
+        cy.wait(1000).get(this.onTimeButton).eq(0).click().wait(1000)
+        cy.wait(4000).contains('Close and Sign').click()
+        cy.contains('Unlock').should('be.visible')
+    }
+
 
     checkVisibilityPersonalDetails(details:string) : void {
         cy.wait(500).contains(details).should('exist')

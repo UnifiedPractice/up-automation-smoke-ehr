@@ -29,7 +29,10 @@ class Calendar extends BasePage {
     public hourSelectorinDropDown: string ='.dx-item-content.dx-list-item-content'
     public inputField : string = '.dx-texteditor-input';
     public patientFromList : string = '.select-patient__result.dx-template-wrapper.dx-item-content.dx-list-item-content'
-
+    public newWindow : string = '.mat-dialog-container'
+    public dropDownArrow : string ='.dx-button-normal.dx-button-mode-contained.dx-widget.dx-dropdowneditor-button'
+    public itemFromList: string = '.dx-template-wrapper.dx-item-content.dx-list-item-content'
+    public arrowMenu: string = '.icon.hamburger.hamburger-arrow-left'
 // @ts-ignore
     CreateNewAppointmentASAP(): void{
         cy.get(this.plusButton).click().wait(1000);
@@ -42,6 +45,22 @@ class Calendar extends BasePage {
         cy.get(this.patientFromList).eq(0).click().wait(2000)
         cy.contains('Reason For Visit').next().click().type('test')
         cy.get('.o-switch').eq(0).click()
+        cy.get(this.dropDownArrow).eq(3).click();
+        cy.wait(1000).get(this.itemFromList).eq(0).click();
+        cy.contains('Save').click().wait(3500);
+        this.checkForConflicts();
+        cy.get(this.arrowMenu).click().wait(2000);
+    }
+
+    checkForConflicts():void{
+        cy.get(this.newWindow).then($box => {
+                const conflictExists = $box.text().includes('Continue and Save')
+                if (conflictExists) {
+                    cy.contains('Continue and Save').click();
+                    cy.wait(3000)
+                }
+            }
+        )
     }
 
 

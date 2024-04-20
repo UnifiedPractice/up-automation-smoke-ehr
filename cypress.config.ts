@@ -4,10 +4,6 @@ export default defineConfig({
   video: true,
   projectId: "5euxj8",
   pageLoadTimeout: 140000,
-  retries: {
-    runMode: 900,
-    openMode: 900
-  },
   // retries: {
   //   runMode: 900,
   //   openMode: 900
@@ -22,6 +18,7 @@ export default defineConfig({
     specPattern: [
         'cypress/e2e/Tests/Reports/*.spec.ts',
         'cypress/e2e/Tests/Calendar/*.spec.ts',
+        'cypress/e2e/Tests/Patient List/*.spec.ts',
         ]
   },
 })
