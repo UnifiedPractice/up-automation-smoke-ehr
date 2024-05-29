@@ -4,10 +4,10 @@ export default defineConfig({
   video: true,
   projectId: "5euxj8",
   pageLoadTimeout: 140000,
-  // retries: {
-  //   runMode: 900,
-  //   openMode: 900
-  // },
+  retries: {
+    runMode: 10,
+    openMode: 10
+  },
   e2e: {
     // We've imported your old cypress plugins here.
     // You may want to clean this up later by importing these.
