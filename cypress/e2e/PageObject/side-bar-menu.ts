@@ -25,13 +25,13 @@ class SideBarNavigate  {
         })
     }
 
-    selectMyPatients() : void {
-        // cy.get(this.level1Selector).eq(2).click();
-        cy.get('.site-menu-item').eq(2).click();
-        // cy.get(this.level2Selector).eq(0).click();
-        cy.contains('My Patients').click()
+    selectMyPatientsfromCalendarWindow() : void {
+        cy.get('.site-menu-item').eq(2).click().wait(2000);
     }
 
+    selectMyPatients() : void {
+        cy.get('.menu-level-1').eq(2).click().wait(2000);
+    }
     selectAllClinicPatients (): void {
         cy.get(this.level1Selector).eq(2).click();
         cy.get(this.level2Selector).eq(1).click();

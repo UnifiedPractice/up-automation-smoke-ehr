@@ -10,11 +10,7 @@ import PatientList from "../../PageObject/patient-list";
 
 describe('Automation test for UP-1263', () => {
     const login = new LoginPage();
-    const pp = new PatientPortal() ;
     const navigate = new SideBarNavigate();
-    const clinicLocations = new ClinicLocations();
-    const basePage = new BasePage();
-    const drawerModal = new DrawerModal();
     const calendar= new Calendar();
     const patientList= new PatientList();
 
@@ -25,7 +21,7 @@ describe('Automation test for UP-1263', () => {
         navigate.extendMenu();
         navigate.selectCalendar()
         calendar.CreateNewAppointmentASAP();
-        navigate.selectMyPatients();
+        navigate.selectMyPatientsfromCalendarWindow();
 
         patientList.beginIntakeAndCloseAndSign();
 

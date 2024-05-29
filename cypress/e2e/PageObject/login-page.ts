@@ -20,7 +20,7 @@
     }
 
     loginAutomation(): void{
-        cy.get(this.username).type('automationcypress');
+        cy.get(this.username).type('automationsmokecypress');
         cy.get(this.password).type('password');
         cy.contains('Login').click();
     }

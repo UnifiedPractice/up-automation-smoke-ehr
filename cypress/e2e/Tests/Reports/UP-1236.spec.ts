@@ -23,8 +23,6 @@ describe('Automation test for UP-1236', () => {
 
         navigate.extendMenu();
         navigate.selectReports('Balance Due');
-        cy.contains('Current Month').click().wait(1000);
-        cy.contains('Current Year').click();
         basePage.exportElement();
 
     })

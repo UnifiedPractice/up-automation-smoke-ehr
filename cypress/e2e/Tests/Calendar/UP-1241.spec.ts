@@ -9,11 +9,7 @@ import Calendar from "../../PageObject/calendar";
 
 describe('Automation test for UP-1241', () => {
     const login = new LoginPage();
-    const pp = new PatientPortal() ;
     const navigate = new SideBarNavigate();
-    const clinicLocations = new ClinicLocations();
-    const basePage = new BasePage();
-    const drawerModal = new DrawerModal();
     const calendar= new Calendar();
 
     it("UP-1241", function () {

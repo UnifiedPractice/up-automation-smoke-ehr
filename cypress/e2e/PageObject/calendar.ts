@@ -33,6 +33,8 @@ class Calendar extends BasePage {
     public dropDownArrow : string ='.dx-button-normal.dx-button-mode-contained.dx-widget.dx-dropdowneditor-button'
     public itemFromList: string = '.dx-template-wrapper.dx-item-content.dx-list-item-content'
     public arrowMenu: string = '.icon.hamburger.hamburger-arrow-left'
+    public selectService: string = '.dx-item-content.dx-list-item-content'
+
 // @ts-ignore
     CreateNewAppointmentASAP(): void{
         cy.get(this.plusButton).click().wait(1000);
@@ -43,6 +45,12 @@ class Calendar extends BasePage {
         cy.get(this.hourSelectorinDropDown).eq(Math.floor(Math.random() * 2)+1).click()
         cy.get(this.inputField).eq(2).click().type('test').wait(2000)
         cy.get(this.patientFromList).eq(0).click().wait(2000)
+        //Calendar appointment window
+
+            //Select service dropdown
+        cy.get(this.dropDownArrow).eq(2).click().wait(2000)
+        cy.get(this.selectService).eq(0).click()
+
         cy.contains('Reason For Visit').next().click().type('test')
         cy.get('.o-switch').eq(0).click()
         cy.get(this.dropDownArrow).eq(3).click();
@@ -53,7 +61,7 @@ class Calendar extends BasePage {
     }
 
     checkForConflicts():void{
-        cy.get(this.newWindow).then($box => {
+        cy.get('body').then($box => {
                 const conflictExists = $box.text().includes('Continue and Save')
                 if (conflictExists) {
                     cy.contains('Continue and Save').click();
