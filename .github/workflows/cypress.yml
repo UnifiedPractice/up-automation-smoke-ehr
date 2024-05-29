@@ -1,4 +1,4 @@
-name: UP Automation regression
+name: UP Automation Regression
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
     branches: [ Alex ]
 
 jobs:
-  run-automation-regression-tests:
+  run-calendar-tests:
     runs-on: windows-latest
     steps:
       - run: git config --global url."https://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@github.com/".insteadOf https://github.com/
@@ -15,12 +15,54 @@ jobs:
         uses: actions/checkout@v4
         with:
           persist-credentials: false
-      - name: Cypress run
+      - name: Run Cypress tests for Calendar
         uses: cypress-io/github-action@v6
         with:
           browser: electron
           record: true
-          parallel: false
+          parallel: true
+          group: 'Calendar Tests'
+          spec: 'cypress/e2e/Tests/Calendar/**'
+        env:
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  run-reports-tests:
+    runs-on: windows-latest
+    steps:
+      - run: git config --global url."https://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@github.com/".insteadOf https://github.com/
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Run Cypress tests for Reports
+        uses: cypress-io/github-action@v6
+        with:
+          browser: electron
+          record: true
+          parallel: true
+          group: 'Reports Tests'
+          spec: 'cypress/e2e/Tests/Reports/**'
+        env:
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  run-patient-list-tests:
+    runs-on: windows-latest
+    steps:
+      - run: git config --global url."https://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@github.com/".insteadOf https://github.com/
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Run Cypress tests for Patient List
+        uses: cypress-io/github-action@v6
+        with:
+          browser: electron
+          record: true
+          parallel: true
+          group: 'Patient List Tests'
+          spec: 'cypress/e2e/Tests/Patient List/**'
         env:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
