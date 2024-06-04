@@ -26,18 +26,19 @@ class PatientList {
     private patientSelect: string = '.appointment-details';
     private greyBullet : string = '.appointment-status.status-none';
     private appointmentTab: string = '.js-appointmentInfo.clickable';
+    private checkBoxBilling: string = '.select-box';
+    private tabSelector: string = '.ui-tabs-anchor';
 
 
     checkContinueBeginIntake(): void {
-        cy.wait(4000).get('body').then($box => {
+        cy.get('body').then($box => {
             const continueIntake = $box.text().includes('Continue Intake')
             if (continueIntake) {
                 cy.get(this.continueIntakeButton).eq(0).click()
-                cy.wait(3000)
             }
             if(!continueIntake) {
                 cy.get(this.beginIntakeButton).eq(0).click()
-                cy.wait(1000).get(this.onTimeButton).eq(0).click().wait(1000)
+                cy.get(this.onTimeButton).eq(0).click()
             }
         }
         )}
@@ -133,27 +134,45 @@ class PatientList {
 
     beginIntakeAndCloseAndSign() : void {
         cy.wait(1000).get(this.greyBullet).eq(0).click()
+        cy.intercept('https://staging.unifiedpractice.com/Public/Intake/BeginIntake?CalendarAppointmentId=**').as('intakeIntercept')
         this.checkContinueBeginIntake();
-        cy.wait(6000).contains('Close and Sign').click()
+        cy.contains('Close and Sign').click()
+        cy.wait('@intakeIntercept')
         cy.contains('Unlock').should('be.visible')
     }
 
 
     beginIntakeAndPrint(): void {
-        cy.wait(1000).get(this.greyBullet).eq(0).click()
+        cy.get(this.greyBullet).eq(0).click()
+        cy.intercept('https://staging.unifiedpractice.com/Public/Intake/BeginIntake?CalendarAppointmentId=**').as('intakeIntercept')
         this.checkContinueBeginIntake();
-        cy.wait(6000).contains('Close and Sign').click()
+        cy.contains('Close and Sign').click()
+        cy.wait('@intakeIntercept')
         cy.contains('Print').click();
     }
 
     printSuperbills(): void {
-        cy.wait(1000).get(this.greyBullet).eq(0).click()
-        cy.get(this.appointmentTab).eq(0).click().wait(8000)
+        cy.get(this.greyBullet).eq(0).click()
+        cy.intercept('https://staging.unifiedpractice.com/Public/PatientManagement/GetAppointmentInfo?calendarAppointmentId=**').as('apptIntercept')
+        cy.get(this.appointmentTab).eq(0).click()
+        cy.wait('@apptIntercept')
         cy.contains('Superbill').click();
+
     }
 
     checkVisibilityPersonalDetails(details:string) : void {
         cy.wait(500).contains(details).should('exist')
+    }
+
+    generateStatements(): void{
+        cy.wait(1000).get(this.greyBullet).eq(0).click()
+        cy.intercept('https://staging.unifiedpractice.com/Public/PatientManagement/PatientFileBillingTab?patientId=**').as('billingIntercept')
+        cy.intercept('https://staging.unifiedpractice.com/Public/Billing/BootgridBillingListByAppointment').as('visitsIntercept')
+        cy.get(this.tabSelector).eq(3).click({force:true})
+        cy.wait('@billingIntercept')
+        cy.wait('@visitsIntercept')
+        cy.get(this.checkBoxBilling).eq(0).check({force:true});
+        cy.contains('Generate patient statements').click();
     }
 }
 

@@ -1,5 +1,6 @@
 {
   "devDependencies": {
+    "cy-verify-downloads": "^0.2.4",
     "cypress": "^13.10.0",
     "cypress-localstorage-commands": "^2.2.5",
     "cypress-wait-until": "^3.0.1",

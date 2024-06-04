@@ -1,11 +1,14 @@
-//This class will be used for any test written throughout the project;
+// This class will be used for any test written throughout the project;
 // the general methods are written here
-
-/// <reference types="cypress" />
+//
+// / <reference types="cypress" />
 import { cloneWith } from "../../../node_modules/cypress/types/lodash/index";
 import ClinicLocations from "./clinic-settings/clinic-locations";
 import DrawerModal from "./drawer-modal";
 import SideBarNavigate from "./side-bar-menu";
+
+
+import {verifyDownloadTasks} from 'cy-verify-downloads';
 
 class BasePage {
 
@@ -47,7 +50,9 @@ public exportSelector: string = '.btn.btn-outline.btn-primary.custom-transparent
     }
 
     exportElement(): void{
-        cy.get(this.exportSelector).click().wait(3000);
+        cy.get(this.exportSelector).should('be.visible').click();
+        cy.verifyDownload('.xlsx', { contains: true });
+
     }
      backtoEHR(): void{
         cy.visit('https://staging.unifiedpractice.com/Public/Dashboard/Index')

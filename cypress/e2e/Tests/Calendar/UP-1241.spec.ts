@@ -1,9 +1,5 @@
 import LoginPage from "../../PageObject/login-page"
 import SideBarNavigate from "../../PageObject/side-bar-menu"
-import PatientPortal from "../../PageObject/patient-portal"
-import ClinicLocations from "../../PageObject/clinic-settings/clinic-locations"
-import BasePage from "../../PageObject/base-page"
-import DrawerModal from "../../PageObject/drawer-modal"
 import Calendar from "../../PageObject/calendar";
 
 

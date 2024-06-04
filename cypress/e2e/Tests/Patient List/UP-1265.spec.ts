@@ -26,7 +26,6 @@ describe('Automation test for UP-1265', () => {
 
 
 
-
     })
 
 })

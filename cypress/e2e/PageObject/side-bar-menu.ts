@@ -7,7 +7,9 @@ class SideBarNavigate  {
     public arrowSelector: string = '.hamburger-arrow-left';
 
     selectCalendar() : void {
-        cy.get(this.level1Selector).eq(1).click().wait(5000);
+        cy.intercept('https://staging.unifiedpractice.com/Public/app/').as('selectCalendarIntercept')
+        cy.get(this.level1Selector).eq(1).click();
+        cy.wait('@selectCalendarIntercept')
     }
 
     selectReports(name: string) : void {
@@ -18,7 +20,7 @@ class SideBarNavigate  {
         cy.wait(2500).get(this.level2Selector).contains(name).click({force:true});
     }
     extendMenu() : void{
-        cy.wait(850).get('.navbar-header-left').then(($el) => {
+        cy.get('.navbar-header-left').should('be.visible').then(($el) => {
             if ($el.hasClass('small')) {
                 cy.get(this.arrowSelector).click({force:true})
             }
@@ -26,16 +28,18 @@ class SideBarNavigate  {
     }
 
     selectMyPatientsfromCalendarWindow() : void {
-        cy.get('.site-menu-item').eq(2).click().wait(2000);
+        cy.intercept('https://staging.unifiedpractice.com/Public/PatientManagement/ClinicPatients').as('listPatientIntercept')
+        cy.get('.site-menu-item').eq(2).click();
+        cy.wait('@listPatientIntercept')
     }
 
     selectMyPatients() : void {
-        cy.get('.menu-level-1').eq(2).click().wait(2000);
+        cy.intercept('https://staging.unifiedpractice.com/Public/PatientManagement/ClinicPatients').as('listPatientIntercept')
+        cy.get('.menu-level-1').eq(2).click();
+        cy.wait('@listPatientIntercept')
+
     }
-    selectAllClinicPatients (): void {
-        cy.get(this.level1Selector).eq(2).click();
-        cy.get(this.level2Selector).eq(1).click();
-    }
+
 
     selectPP(): void {
        // cy.intercept('https://data.pendo.io/data/ptm.gif/',{statusCode: 200, fixture: 'avoid'}).as('url')
