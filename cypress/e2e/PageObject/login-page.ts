@@ -25,6 +25,18 @@
         cy.contains('Login').click();
     }
 
+     loginAutomationPP(): void{
+         cy.get(this.username).type('automationcypress');
+         cy.get(this.password).type('password');
+         cy.contains('Login').click();
+     }
+
+     loginAutomationSmokeUniversity(): void{
+         cy.get(this.username).type('automationsmokecypressuniversity');
+         cy.get(this.password).type('password');
+         cy.contains('Login').click();
+     }
+
      loginPPNCFPCCPE(): void{
          cy.get(this.username).type('PPNCFPCCPE');
          cy.get(this.password).type('password');

@@ -28,7 +28,14 @@ class PatientList {
     private appointmentTab: string = '.js-appointmentInfo.clickable';
     private checkBoxBilling: string = '.select-box';
     private tabSelector: string = '.ui-tabs-anchor';
-
+    private sendReminderSelector: string = '#btnSendReminder_PatientFile';
+    private billingInfoSaveSelector: string ='.btn.button.default.no-select.pull-right.js-btnSave.js-btnSaveFooter'
+    private receivePaymentSelector: string = '.button.default.no-select.js-receive_payment_btn';
+    private applyCurrentVisitSelector: string = '.button.no-select.default.js-apply_to_current_visit';
+    private superbillSelector: string = '.btn.button.default.superbill.no-select.pull-right.js-btn_superbill';
+    private cancelButtonSelector: string = '.btn.button.no-select.pull-right.js-btnCancel';
+    private cptFieldSelector : string = '#billingCPT_autocomplete';
+    private dropdownCptSelector: string = '.tt-dropdown-menu';
 
     checkContinueBeginIntake(): void {
         cy.get('body').then($box => {
@@ -51,20 +58,18 @@ class PatientList {
         cy.wait('@waiting')
         cy.wait(400)
         cy.get('.patient-box').eq(0).click().wait(1500)
-        // cy.intercept('https://staging.unifiedpractice.com/Public/PatientManagement/PatientFileAppointmentsTab?patientId=*').as('visible')
-        // cy.contains(name).should('be.visible')
-        // cy.wait('@visible')
+
     }
 
     addNewPatient(): void {
         cy.intercept('https://staging.unifiedpractice.com/Public/PatientManagement/AddPatient?_=*').as('patient');
         cy.contains('Add Patient').click();
         cy.wait('@patient')
-        cy.wait(2000);
-        this.completeField('First Name','Automation'+getDayMonthHour);
+        this.completeField('First Name','Automation Smoke'+getDayMonthHour);
         this.completeField('Last Name','Engineer'+getDayMonthHour);
         cy.get(this.emailField).click().type('engineer'+getDayMonthHour+'@email.com');
         cy.contains('Save').click()
+        cy.contains('Patient added').should('be.visible');
     }
 
     addNewPatientforMatchingError(): void {
@@ -132,18 +137,23 @@ class PatientList {
 
     }
 
+    selectFirstPatientByDate(): void{
+        cy.get(this.greyBullet).eq(0).should('be.visible').click()
+
+    }
+
     beginIntakeAndCloseAndSign() : void {
-        cy.wait(1000).get(this.greyBullet).eq(0).click()
+        this.selectFirstPatientByDate();
         cy.intercept('https://staging.unifiedpractice.com/Public/Intake/BeginIntake?CalendarAppointmentId=**').as('intakeIntercept')
         this.checkContinueBeginIntake();
-        cy.contains('Close and Sign').click()
+        cy.contains('Close and Sign').should('be.visible').click()
         cy.wait('@intakeIntercept')
         cy.contains('Unlock').should('be.visible')
     }
 
 
     beginIntakeAndPrint(): void {
-        cy.get(this.greyBullet).eq(0).click()
+        this.selectFirstPatientByDate();
         cy.intercept('https://staging.unifiedpractice.com/Public/Intake/BeginIntake?CalendarAppointmentId=**').as('intakeIntercept')
         this.checkContinueBeginIntake();
         cy.contains('Close and Sign').click()
@@ -152,7 +162,7 @@ class PatientList {
     }
 
     printSuperbills(): void {
-        cy.get(this.greyBullet).eq(0).click()
+        this.selectFirstPatientByDate();
         cy.intercept('https://staging.unifiedpractice.com/Public/PatientManagement/GetAppointmentInfo?calendarAppointmentId=**').as('apptIntercept')
         cy.get(this.appointmentTab).eq(0).click()
         cy.wait('@apptIntercept')
@@ -165,7 +175,7 @@ class PatientList {
     }
 
     generateStatements(): void{
-        cy.wait(1000).get(this.greyBullet).eq(0).click()
+        this.selectFirstPatientByDate();
         cy.intercept('https://staging.unifiedpractice.com/Public/PatientManagement/PatientFileBillingTab?patientId=**').as('billingIntercept')
         cy.intercept('https://staging.unifiedpractice.com/Public/Billing/BootgridBillingListByAppointment').as('visitsIntercept')
         cy.get(this.tabSelector).eq(3).click({force:true})
@@ -174,6 +184,58 @@ class PatientList {
         cy.get(this.checkBoxBilling).eq(0).check({force:true});
         cy.contains('Generate patient statements').click();
     }
+
+    sendReminder(): void {
+        this.selectFirstPatientByDate();
+        cy.intercept('https://staging.unifiedpractice.com/Public/PatientManagement/PatientFileFormsTab?patientId=**').as('formsIntercept')
+        cy.get(this.tabSelector).eq(4).click({force:true})
+        cy.wait('@formsIntercept');
+        cy.get(this.sendReminderSelector).should('be.visible').click();
+        cy.contains('Reminder was sent').should('be.visible')
+    }
+
+    addCPTCodeAndReceivePayment():void {
+        this.selectFirstPatientByDate();
+        cy.get(this.appointmentTab).eq(0).click()
+        cy.contains('Billing Status').should('be.visible')
+        cy.get(this.cptFieldSelector).click({force:true}).type('97810');
+        cy.get(this.dropdownCptSelector).each(() => {
+            cy.contains('Acupuncture').first().should('be.visible').click({force:true});
+        })
+        cy.get(this.billingInfoSaveSelector).click();
+        cy.contains('The changes have been saved').should('be.visible')
+
+        cy.get(this.receivePaymentSelector).click();
+        cy.get(this.applyCurrentVisitSelector).should('be.visible').click();
+    }
+
+    createClaim():void {
+        this.selectFirstPatientByDate();
+        cy.intercept('https://staging.unifiedpractice.com/Public/PatientManagement/GetAppointmentInfo?calendarAppointmentId=**').as('apptIntercept')
+        cy.get(this.appointmentTab).eq(0).click()
+        cy.wait('@apptIntercept')
+        cy.get(this.cancelButtonSelector).scrollIntoView()
+        cy.contains('View Claim', { timeout: 0 }).then($viewClaim => {
+            if ($viewClaim.length > 0 && $viewClaim.is(':visible')) {
+                cy.wrap($viewClaim).click();
+            } else {
+                cy.contains('Create Claim').click();
+                cy.contains('Claim successfully created').should('be.visible');
+            }
+        });
+    }
+
+    generateSuperbill():void {
+        this.selectFirstPatientByDate();
+        cy.intercept('https://staging.unifiedpractice.com/Public/PatientManagement/GetAppointmentInfo?calendarAppointmentId=**').as('apptIntercept')
+        cy.get(this.appointmentTab).eq(0).click()
+        cy.wait('@apptIntercept')
+        cy.get(this.cancelButtonSelector).scrollIntoView()
+        cy.get(this.superbillSelector).click();
+    }
+
+
+
 }
 
 export default PatientList

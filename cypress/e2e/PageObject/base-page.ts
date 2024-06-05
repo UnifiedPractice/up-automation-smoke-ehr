@@ -12,8 +12,8 @@ import {verifyDownloadTasks} from 'cy-verify-downloads';
 
 class BasePage {
 
-public formSelector: string = '.row.justify-content-between.align-items-center';
-public sliderSelector: string = '.o-switch';
+public formSelector: string = '.form-group';
+public sliderSelector: string = '.checkboxSlider';
 public exportSelector: string = '.btn.btn-outline.btn-primary.custom-transparent-btn'
 
 
@@ -30,8 +30,8 @@ public exportSelector: string = '.btn.btn-outline.btn-primary.custom-transparent
         cy.get(this.formSelector).contains(name).parent().find(this.sliderSelector).then(($button) => {
             if ($button.hasClass('redClass')) {
                 cy.get(this.formSelector).contains(name).parent().find(this.sliderSelector).click({force:true});
-            } 
-          })
+            }
+        })
     }
     
      setToOff(name: string): any {

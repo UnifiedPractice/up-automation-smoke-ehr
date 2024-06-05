@@ -13,7 +13,7 @@ class SideBarNavigate  {
     }
 
     selectReports(name: string) : void {
-        cy.wait(2500).get(this.level2Selector).contains(name).click({force:true});
+        cy.get(this.level2Selector).contains(name).click({force:true});
     }
 
     selectBilling(name: string) : void {
@@ -22,6 +22,13 @@ class SideBarNavigate  {
     extendMenu() : void{
         cy.get('.navbar-header-left').should('be.visible').then(($el) => {
             if ($el.hasClass('small')) {
+                cy.get(this.arrowSelector).click({force:true})
+            }
+        })
+    }
+    extendMenuforUniversities() : void{
+        cy.wait(600).get('.navbar__content-parent').then(($el) => {
+            if (!$el.hasClass('extended')) {
                 cy.get(this.arrowSelector).click({force:true})
             }
         })
@@ -37,7 +44,11 @@ class SideBarNavigate  {
         cy.intercept('https://staging.unifiedpractice.com/Public/PatientManagement/ClinicPatients').as('listPatientIntercept')
         cy.get('.menu-level-1').eq(2).click();
         cy.wait('@listPatientIntercept')
+    }
 
+    selectMyPatientsOnUniversities(): void{
+        cy.get('.site-menu-title').eq(2).click();
+        cy.contains('Clinic Patients').should('be.visible').click()
     }
 
 

@@ -48,7 +48,7 @@ class PatientPortal extends BasePage {
     public bookApointmentSelector : string = '.text-right';
     private uploadLiveChatSelector: string = '.rfu-file-upload-button';
     private secondSelectBoxSelector
-    private usernameLogin: string= 'automation19@email.com';
+    private usernameLogin: string= 'automation22@email.com';
     private passwordLogin: string = 'password';
     private cancelButton: string = '.mat-icon.notranslate.mt-1.cancel-icon.mat-icon-no-color';
     private rescheduleButoon: string = '.mat-icon.notranslate.mr-1.material-icons.mat-icon-no-color';
@@ -134,7 +134,7 @@ class PatientPortal extends BasePage {
     }
 
     proceedLogin() : void {
-        cy.wait(5000).get('.inp').eq(0).click().type('automation19@email.com');
+        cy.wait(5000).get('.inp').eq(0).click().type('automation22@email.com');
         cy.contains('Password').parent().click().type('password');
         cy.get(this.loginButtonSelector).click().wait(19000);
     }
