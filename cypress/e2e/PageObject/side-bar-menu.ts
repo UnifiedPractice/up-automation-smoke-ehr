@@ -35,15 +35,22 @@ class SideBarNavigate  {
     }
 
     selectMyPatientsfromCalendarWindow() : void {
-        cy.intercept('https://staging.unifiedpractice.com/Public/PatientManagement/ClinicPatients').as('listPatientIntercept')
+       // cy.intercept('https://staging.unifiedpractice.com/Public/PatientManagement/ClinicPatients').as('listPatientIntercept')
         cy.get('.site-menu-item').eq(2).click();
-        cy.wait('@listPatientIntercept')
+        cy.contains('Clinic Patients').should('be.visible').click()
+
+        cy.contains('All Clinic Patients').should('be.visible')
+
+        //cy.wait('@listPatientIntercept')
     }
 
     selectMyPatients() : void {
-        cy.intercept('https://staging.unifiedpractice.com/Public/PatientManagement/ClinicPatients').as('listPatientIntercept')
+        //cy.intercept('https://staging.unifiedpractice.com/Public/PatientManagement/ClinicPatients').as('listPatientIntercept')
         cy.get('.menu-level-1').eq(2).click();
-        cy.wait('@listPatientIntercept')
+        cy.contains('Clinic Patients').should('be.visible').click()
+
+        cy.contains('All Clinic Patients').should('be.visible')
+        // cy.wait('@listPatientIntercept')
     }
 
     selectMyPatientsSecondSelector(): void{
