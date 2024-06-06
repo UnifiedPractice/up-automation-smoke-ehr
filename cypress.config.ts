@@ -8,10 +8,10 @@ export default defineConfig({
   projectId: "5euxj8",
   pageLoadTimeout: 140000,
   defaultCommandTimeout: 10000,
-  //   retries: {
-  //   runMode: 7,
-  //   openMode: 7
-  // },
+    retries: {
+    runMode: 8,
+    openMode: 8
+  },
   e2e: {
     // We've imported your old cypress plugins here.
     // You may want to clean this up later by importing these.

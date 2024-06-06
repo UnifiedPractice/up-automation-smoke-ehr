@@ -131,9 +131,11 @@ class PatientPortal extends BasePage {
     }
 
     proceedLogin() : void {
-        cy.wait(5000).get('.inp').eq(0).click().type('automation22@email.com');
+        cy.contains('If you have an account, please login to book your appointment. If not, create one below.').should('be.visible')
+        cy.get('.inp').eq(0).click().type('automation22@email.com');
         cy.contains('Password').parent().click().type('password');
         cy.get(this.loginButtonSelector).click();
+
     }
 
     checkLogin() {
@@ -1107,36 +1109,39 @@ class PatientPortal extends BasePage {
     }
 
     openChat(): void{
-        cy.get(this.burgerMenuSelector).should('be.visible').click();
-        cy.get('.mat-menu-content').should('be.visible').within(() =>
-            cy.contains('Chat').click().wait(8500) )
+        cy.get('.top-title').should('be.visible')
+        cy.get(this.burgerMenuSelector).click();
+        cy.get('.mat-menu-content').within(() =>
+            cy.contains('Chat').click()
+        )
+        cy.contains('Conversations').should('be.visible')
     }
 
-    // openChatwithPractitioner(): void{
-    //         cy.wait(2500);
-    //         cy.get(this.headerChatSelector).within(() =>
-    //         cy.wait(2500).get(this.iconSelector).click({force:true}) )
-    //         cy.wait(2000).contains('Chat with your practitioner').click({force:true})
-    // }
-
     openChatwithPractitioner(): void{
-        cy.wait(5500);
         cy.get(this.headerChatSelector).click({force:true});
-        cy.wait(2000).contains('Chat with your practitioner').click({force:true})
+        cy.contains('Chat with your practitioner').should('be.visible').click()
     }
 
     checkMessageInEHR():void{
-        cy.wait(3500).get('.mat-button-base').click().wait(1500);
-        cy.get('.text-ellipsis').eq(0).click();
-        cy.contains('generated to verify that the message was sent to the EHR:' + getDayMonthHour).should('be.visible');
+        cy.contains('.flex.flex-row.p-4.w-full.flex-grow.gap-2.cursor-pointer.place-content-start.items-center','automationsmokecypress').should('be.visible').click()
+        cy.contains(getDayMonthHour).should('be.visible');
     }
+
+
 
     openChatwithFrontdesk(): void{
-        cy.wait(15000).get(this.headerChatSelector).within(() =>
-            cy.get(this.iconSelector).click({force:true}) )
-        cy.wait(2000).contains('Chat with front desk').click({force:true})
+        // cy.get(this.headerChatSelector).within(() =>
+        //     cy.get(this.iconSelector).click({force:true}) )
+        cy.contains('Conversations').should('be.visible')
+        cy.contains('.flex.flex-row.p-4.w-full.flex-grow.gap-2.cursor-pointer.place-content-start.items-center','FF').should('be.visible').click()
+        //cy.contains('Chat with front desk').should('be.visible').click({force:true})
     }
 
+    sendRandomMessageinChat() : void{
+        cy.get('.rta').click().type('This is a message sent by the automation software. The next time will be automatically generated to verify that the message was sent to the EHR: ' + getDayMonthHour).trigger('keydown', {
+            key: 'Enter',
+        })
+    }
     sendMessageToPractitioner(): void{
         cy.get('.rta').click().type('This is a message sent by the automation software. The next time will be automatically generated to verify that the message was sent to the EHR: ' + getDayMonthHour).trigger('keydown', {
             key: 'Enter',

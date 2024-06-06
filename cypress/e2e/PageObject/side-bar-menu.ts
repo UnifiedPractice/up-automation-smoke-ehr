@@ -46,7 +46,7 @@ class SideBarNavigate  {
         cy.wait('@listPatientIntercept')
     }
 
-    selectMyPatientsOnUniversities(): void{
+    selectMyPatientsSecondSelector(): void{
         cy.get('.site-menu-title').eq(2).click();
         cy.contains('Clinic Patients').should('be.visible').click()
     }
@@ -59,15 +59,26 @@ class SideBarNavigate  {
     }
 
     selectCS(name: string) : void {
-        
+
         cy.wait(2500).get(this.level1Selector).eq(10).click({force:true});
         cy.wait(2500).get(this.level2Selector).contains(name).click({force:true});
 
     }
 
     selectLiveChat(): void{
-        cy.get(this.level1Selector).eq(3).invoke('removeAttr', 'target').click();
+        cy.visit('https://staging.unifiedpractice.com/Public/app/#/chat')
+        cy.get('.mat-button-wrapper').click();
     }
+
+    goToCalendarAndPPfromChat(): void{
+        cy.intercept('https://staging.unifiedpractice.com/Public/coreapi/api/clinic/practitioners?IncludeInactive=true').as('openCalendarIntercept')
+        cy.contains('.site-menu-title', 'Calendar').should('be.visible').click();
+        cy.wait('@openCalendarIntercept')
+        cy.get('.upscheduler__filters-today').should('be.visible')
+        cy.contains('.site-menu-title', 'Patient Portal').should('be.visible').click();
+
+    }
+
 }
 
 export default SideBarNavigate

@@ -36,6 +36,7 @@ class PatientList {
     private cancelButtonSelector: string = '.btn.button.no-select.pull-right.js-btnCancel';
     private cptFieldSelector : string = '#billingCPT_autocomplete';
     private dropdownCptSelector: string = '.tt-dropdown-menu';
+    private chatIconSelector: string = '.icon-comment';
 
     checkContinueBeginIntake(): void {
         cy.get('body').then($box => {
@@ -139,7 +140,10 @@ class PatientList {
 
     selectFirstPatientByDate(): void{
         cy.get(this.greyBullet).eq(0).should('be.visible').click()
+    }
 
+    selectPatientAlexandru(): void{
+        cy.contains('.appointment-box.clearfix','test alexandru').should('be.visible').click()
     }
 
     beginIntakeAndCloseAndSign() : void {
@@ -234,7 +238,9 @@ class PatientList {
         cy.get(this.superbillSelector).click();
     }
 
-
+    clickOnChatIcon(): void {
+        cy.get(this.chatIconSelector).should('be.visible').click({force:true});
+    }
 
 }
 

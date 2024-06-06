@@ -8,7 +8,6 @@ describe('Automation test for UP-4546', () => {
     const login = new LoginPage();
     const navigate = new SideBarNavigate();
     const calendar= new Calendar();
-    const patientList= new PatientList();
 
     it("UP-4546", function () {
         cy.viewport(1920,1080)
@@ -19,7 +18,7 @@ describe('Automation test for UP-4546', () => {
         navigate.selectCalendar()
         calendar.CreateNewAppointmentOnUniversities();
         navigate.extendMenuforUniversities();
-        navigate.selectMyPatientsOnUniversities();
+        navigate.selectMyPatientsSecondSelector();
     })
 
 })

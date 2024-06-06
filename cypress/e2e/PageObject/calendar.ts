@@ -46,7 +46,7 @@ class Calendar extends BasePage {
         cy.get(this.iconSelectorPreBooking).eq(1).click();
         cy.get(this.hourSelectorinDropDown).eq(Math.floor(Math.random() * 4)+1).click()
         cy.intercept('https://staging.unifiedpractice.com/Public/coreapi/api/clinic/patients?**').as('listPatientIntercept')
-        cy.get(this.inputField).eq(2).click().type('test')
+        cy.get(this.inputField).eq(2).click().type('test alexandru')
         cy.wait('@listPatientIntercept')
         cy.get(this.patientFromList).eq(0).click()
         //Calendar appointment window
@@ -71,7 +71,7 @@ class Calendar extends BasePage {
                 });
             }
         })
-       // cy.get(this.arrowMenu).should('be.visible').click()
+        cy.get(this.arrowMenu).should('be.visible').click()
     }
 
     CreateNewAppointmentOnUniversities(): void{
