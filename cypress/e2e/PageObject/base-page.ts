@@ -52,7 +52,10 @@ public exportSelector: string = '.btn.btn-outline.btn-primary.custom-transparent
     exportElement(): void{
         cy.get(this.exportSelector).should('be.visible').click();
         cy.verifyDownload('.xlsx', { contains: true });
-
+    }
+    exportElementCSV(): void{
+        cy.get(this.exportSelector).should('be.visible').click();
+        cy.verifyDownload('.csv', { contains: true });
     }
      backtoEHR(): void{
         cy.visit('https://staging.unifiedpractice.com/Public/Dashboard/Index')

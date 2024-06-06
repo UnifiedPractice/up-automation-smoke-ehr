@@ -64,11 +64,8 @@ class PatientPortal extends BasePage {
         this.setToOn('Allow patients to book appointments online');
         cy.wait(500);
         cy.contains('Save').click().wait(1200);
-        cy.intercept(`${FINAL_API_STAGING_PP()}`).as('ppOrganization');
-        cy.contains('https://pp.staging.unifiedpractice.com/automation-cypress').should('be.visible').get('.label-pp-url').eq(1).invoke('removeAttr', 'target').click()
-        cy.wait(1000)
-        cy.wait('@ppOrganization');
-        cy.wait(1500)
+        cy.contains('https://pp.staging.unifiedpractice.com/automation').should('be.visible').get('.label-pp-url').eq(1).invoke('removeAttr', 'target').click()
+
     }
 
     openPPwithoutActive(): void {
@@ -136,11 +133,11 @@ class PatientPortal extends BasePage {
     proceedLogin() : void {
         cy.wait(5000).get('.inp').eq(0).click().type('automation22@email.com');
         cy.contains('Password').parent().click().type('password');
-        cy.get(this.loginButtonSelector).click().wait(19000);
+        cy.get(this.loginButtonSelector).click();
     }
 
     checkLogin() {
-        cy.get(this.burgerMenuSelector).click();
+        cy.get(this.burgerMenuSelector).should('be.visible').click();
         cy.get('.mat-menu-item').then(($el) => {
             if($el.text().includes('Logout')){
                 cy.get(this.burgerMenuSelector).click({force:true});
@@ -1110,8 +1107,8 @@ class PatientPortal extends BasePage {
     }
 
     openChat(): void{
-        cy.wait(22500).get(this.burgerMenuSelector).click().wait(4500);
-        cy.wait(3300).get('.mat-menu-content').within(() =>
+        cy.get(this.burgerMenuSelector).should('be.visible').click();
+        cy.get('.mat-menu-content').should('be.visible').within(() =>
             cy.contains('Chat').click().wait(8500) )
     }
 

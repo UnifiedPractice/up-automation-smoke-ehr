@@ -23,9 +23,9 @@ describe('Automation test for UP-1228', () => {
 
         navigate.extendMenu();
         navigate.selectReports('Transactions By Date')
-        cy.contains('Current Month').click().wait(1000);
+        cy.contains('Current Month').click()
         cy.contains('Current Year').click();
-        basePage.exportElement();
+        basePage.exportElementCSV();
 
     })
 
