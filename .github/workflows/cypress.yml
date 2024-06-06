@@ -1,0 +1,26 @@
+name: UP Automation regression
+
+on:
+  push:
+    branches: [ Alex ]
+  pull_request:
+    branches: [ Alex ]
+
+jobs:
+  run-automation-regression-tests:
+    runs-on: windows-latest
+    steps:
+      - run: git config --global url."https://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@github.com/".insteadOf https://github.com/
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Cypress run
+        uses: cypress-io/github-action@v6
+        with:
+          browser: electron
+          record: true
+          parallel: false
+        env:
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
