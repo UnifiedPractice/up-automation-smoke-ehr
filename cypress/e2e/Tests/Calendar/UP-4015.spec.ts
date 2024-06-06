@@ -7,7 +7,7 @@ import DrawerModal from "../../PageObject/drawer-modal"
 import Calendar from "../../PageObject/calendar";
 
 
-describe('Automation test for UP-1241', () => {
+describe('Automation test for UP-4015', () => {
     const login = new LoginPage();
     const pp = new PatientPortal() ;
     const navigate = new SideBarNavigate();
@@ -16,7 +16,7 @@ describe('Automation test for UP-1241', () => {
     const drawerModal = new DrawerModal();
     const calendar= new Calendar();
 
-    it("UP-1241", function () {
+    it("UP-4015", function () {
 
         login.goToStaging();
         login.loginAutomation();
@@ -24,7 +24,9 @@ describe('Automation test for UP-1241', () => {
         navigate.extendMenu();
         navigate.selectCalendar();
 
-        calendar.CreateNewAppointment('01:00 PM', 'Automation without CCPE', 'test');
+        calendar.CreateNewAppointment('08:30 PM', 'Automation D', 'patient');
+        calendar.DragAndDrop('Automation D');
+        calendar.DeleteAppointment('Automation D');
 
 
     })

@@ -7,6 +7,7 @@ import ClinicLocations from "./clinic-settings/clinic-locations";
 import DrawerModal from "./drawer-modal";
 import SideBarNavigate from "./side-bar-menu";
 
+
 class BasePage {
 
 public formSelector: string = '.row.justify-content-between.align-items-center';
@@ -52,6 +53,7 @@ public exportSelector: string = '.btn.btn-outline.btn-primary.custom-transparent
      backtoEHR(): void{
         cy.visit('https://staging.unifiedpractice.com/Public/Dashboard/Index')
      }
+
 
 
 }
