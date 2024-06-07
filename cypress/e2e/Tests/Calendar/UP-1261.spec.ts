@@ -24,7 +24,7 @@ describe('Automation test for UP-1261', () => {
         navigate.extendMenu();
         navigate.selectCalendar();
 
-        calendar.PrintStatement();
+        calendar.printStatement();
 
 
     })

@@ -24,7 +24,7 @@ describe('Automation test for UP-1249', () => {
         navigate.extendMenu();
         navigate.selectCalendar();
 
-        calendar.EditAppointmentRepeat('Automation without CCPE');
+        calendar.editAppointmentRepeat('Automation without CCPE');
 
 
     })

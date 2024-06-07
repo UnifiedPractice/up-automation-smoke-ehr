@@ -24,8 +24,8 @@ describe('Automation test for UP-1244', () => {
         navigate.extendMenu();
         navigate.selectCalendar();
 
-        calendar.CreateNewAppointment('02:00 PM', 'Automation Telehealth', 'test');
-        calendar.DeleteAppointment('Automation Telehealth');
+        calendar.createNewAppointment('02:00 PM', 'Automation Telehealth', 'test');
+        calendar.deleteAppointment('Automation Telehealth');
 
 
     })

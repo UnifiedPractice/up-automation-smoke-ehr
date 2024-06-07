@@ -24,7 +24,7 @@ describe('Automation test for UP-1243', () => {
         navigate.extendMenu();
         navigate.selectCalendar();
 
-        calendar.DeleteAppointment('Automation without CCPE');
+        calendar.deleteAppointment('Automation without CCPE');
 
 
     })

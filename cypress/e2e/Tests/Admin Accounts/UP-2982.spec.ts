@@ -25,8 +25,8 @@ describe('Automation test for UP-2982', () => {
         navigate.extendMenu();
         navigate.selectCalendar();
 
-        calendar.CreateNewPatient();
-        calendar.CreateNewAppointmentCCPENewCard ('02:00 PM', 'Service with CCPE', firstName);
+        calendar.createNewPatient();
+        calendar.createNewAppointmentCCPENewCard ('02:00 PM', 'Service with CCPE', firstName);
 
     })
 

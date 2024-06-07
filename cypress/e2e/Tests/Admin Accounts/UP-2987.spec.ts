@@ -24,7 +24,7 @@ describe('Automation test for UP-2987', () => {
         navigate.extendMenu();
         navigate.selectCalendar();
 
-        calendar.PrintStatement();
+        calendar.printStatement();
 
 
     })

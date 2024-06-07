@@ -24,7 +24,7 @@ describe('Automation test for UP-1251', () => {
         navigate.extendMenu();
         navigate.selectCalendar();
 
-        calendar.CancelTimeOffRepeat('REPEAT');
+        calendar.cancelTimeOffRepeat('REPEAT');
 
 
     })

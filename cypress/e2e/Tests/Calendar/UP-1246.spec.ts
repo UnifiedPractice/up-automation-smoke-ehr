@@ -25,7 +25,7 @@ describe('Automation test for UP-1246', () => {
         navigate.extendMenu();
         navigate.selectCalendar();
 
-        calendar.CreateNewAppointment ('03:00 PM', 'Service with CCPE', 'Popeye' );
+        calendar.createNewAppointment ('03:00 PM', 'Service with CCPE', 'Popeye' );
 
     })
 

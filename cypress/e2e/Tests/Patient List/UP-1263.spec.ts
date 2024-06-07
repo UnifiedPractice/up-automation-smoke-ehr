@@ -20,7 +20,7 @@ describe('Automation test for UP-1263', () => {
 
         navigate.extendMenu();
         navigate.selectCalendar()
-        calendar.CreateNewAppointmentASAP();
+        calendar.createNewAppointmentASAP();
         navigate.selectMyPatientsfromCalendarWindow();
 
         patientList.beginIntakeAndCloseAndSign();

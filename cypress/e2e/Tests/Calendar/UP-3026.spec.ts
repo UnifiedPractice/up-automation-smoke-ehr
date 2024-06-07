@@ -24,8 +24,8 @@ describe('Automation test for UP-3026', () => {
         navigate.extendMenu();
         navigate.selectCalendar();
 
-        calendar.EditAppointment('U Automation');
-        calendar.DeleteAppointment('U Automation');
+        calendar.editAppointment('U Automation');
+        calendar.deleteAppointment('U Automation');
 
 
     })

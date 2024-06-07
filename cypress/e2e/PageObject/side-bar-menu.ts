@@ -6,8 +6,10 @@ class SideBarNavigate  {
     public level2Selector: string = '.menu-level-2';
     public arrowSelector: string = '.hamburger-arrow-left';
 
-    selectCalendar() : void {
-        cy.get(this.level1Selector).eq(1).click().wait(5000);
+    selectCalendar(): void {
+        cy.get(this.level1Selector).eq(1).click();
+        cy.wait(500);
+        cy.contains('.upscheduler__filters-title', 'Services').should('be.visible');
     }
 
     selectReports(name: string) : void {

@@ -24,7 +24,7 @@ describe('Automation test for UP-3025', () => {
         navigate.extendMenu();
         navigate.selectCalendar();
 
-        calendar.CreateNewAppointmentUniversity('01:00 PM', 'U Automation', 'test');
+        calendar.createNewAppointmentUniversity('01:00 PM', 'U Automation', 'test');
 
 
     })

@@ -25,7 +25,7 @@ describe('Automation test for UP-2984', () => {
         navigate.extendMenu();
         navigate.selectCalendar();
 
-        calendar.DeleteAppointmentCharge ('Popeye' );
+        calendar.deleteAppointmentCharge ('Popeye' );
 
     })
 

@@ -24,7 +24,7 @@ describe('Automation test for UP-1255', () => {
         navigate.extendMenu();
         navigate.selectCalendar();
 
-        calendar.EditTimeOff('1254');
+        calendar.editTimeOff('1254');
 
 
     })

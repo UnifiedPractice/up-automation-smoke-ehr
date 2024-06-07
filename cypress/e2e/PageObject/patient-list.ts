@@ -28,7 +28,7 @@ class PatientList {
     private appointmentTab: string = '.js-appointmentInfo.clickable';
 
 
-    checkContinueBeginIntake(): void {
+    checkContinuebeginIntake(): void {
         cy.wait(4000).get('body').then($box => {
             const continueIntake = $box.text().includes('Continue Intake')
             if (continueIntake) {
@@ -133,7 +133,7 @@ class PatientList {
 
     beginIntakeAndCloseAndSign() : void {
         cy.wait(1000).get(this.greyBullet).eq(0).click()
-        this.checkContinueBeginIntake();
+        this.checkContinuebeginIntake();
         cy.wait(6000).contains('Close and Sign').click()
         cy.contains('Unlock').should('be.visible')
     }
@@ -141,7 +141,7 @@ class PatientList {
 
     beginIntakeAndPrint(): void {
         cy.wait(1000).get(this.greyBullet).eq(0).click()
-        this.checkContinueBeginIntake();
+        this.checkContinuebeginIntake();
         cy.wait(6000).contains('Close and Sign').click()
         cy.contains('Print').click();
     }

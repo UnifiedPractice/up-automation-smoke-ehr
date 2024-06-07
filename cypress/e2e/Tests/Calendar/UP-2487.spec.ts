@@ -24,7 +24,7 @@ describe('Automation test for UP-2487', () => {
         navigate.extendMenu();
         navigate.selectCalendar();
 
-        calendar.CalendarSendReminder('Automation');
+        calendar.calendarSendReminder('Automation');
 
 
     })

@@ -24,9 +24,9 @@ describe('Automation test for UP-4015', () => {
         navigate.extendMenu();
         navigate.selectCalendar();
 
-        calendar.CreateNewAppointment('08:30 PM', 'Automation D', 'patient');
-        calendar.DragAndDrop('Automation D');
-        calendar.DeleteAppointment('Automation D');
+        calendar.createNewAppointment('08:30 PM', 'Automation D', 'patient');
+        calendar.dragAndDrop('Automation D');
+        calendar.deleteAppointment('Automation D');
 
 
     })

@@ -24,7 +24,7 @@ describe('Automation test for UP-1248', () => {
         navigate.extendMenu();
         navigate.selectCalendar();
 
-        calendar.CreateNewAppointmentRepeatMultiple('04:00 PM', 'Automation without CCPE', 'test patient');
+        calendar.createNewAppointmentRepeatMultiple('04:00 PM', 'Automation without CCPE', 'test patient');
 
 
     })

@@ -24,7 +24,7 @@ describe('Automation test for UP-2986', () => {
         navigate.extendMenu();
         navigate.selectCalendar();
 
-        calendar.CreateNewAppointmentRepeatMultiple('05:00 PM', 'Without', 'test patient');
+        calendar.createNewAppointmentRepeatMultiple('05:00 PM', 'Without', 'test patient');
 
 
     })

@@ -24,7 +24,7 @@ describe('Automation test for UP-3031', () => {
         navigate.extendMenu();
         navigate.selectCalendar();
 
-        calendar.BeginIntake('Automation');
+        calendar.beginIntake('Automation');
 
 
     })

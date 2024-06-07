@@ -24,7 +24,7 @@ describe('Automation test for UP-1241', () => {
         navigate.extendMenu();
         navigate.selectCalendar();
 
-        calendar.CreateNewAppointment('01:00 PM', 'Automation without CCPE', 'test');
+        calendar.createNewAppointment('12:00 AM', 'Automation without CCPE', 'test');
 
 
     })

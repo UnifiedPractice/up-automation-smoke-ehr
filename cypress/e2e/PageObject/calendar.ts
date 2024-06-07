@@ -60,46 +60,46 @@ class Calendar extends BasePage {
     public cardNewName: string ='input.form-control.fs-form-control:eq(0)';
     public cardNewZip: string ='input.form-control.fs-form-control:eq(1)';
     //These don't work V V V V
-    public cardNewCard: string ='#card-number';
+        public cardNewCard: string = '#fullsteam-hosted-card-number-div';
     public cardNewMonthDropdown: string = '#fullsteam-hosted-expiration-month-div';
     public cardNewYearDropdown: string = '#fullsteam-hosted-expiration-year-div';
     public cardNewCVV: string = '#fullsteam-hosted-cvv-div';
     //These don't work ^ ^ ^ ^
     public cardNewSave: string = 'input#fullsteam-submit-button';
     public saveAppointment: string ='#modal_layout > up-modal-layout > div > ng-component > up-create-appointment > div.create-appointment__footer > div > div > dx-button > div > span';
-    public cardNewCard: string = '#fullsteam-hosted-card-number-div';
     public cardNumberIframeSelector: string = '#fullsteam-hosted-card-number-frame';
     public cardNumberInputSelector: string = 'input#card-number'; // Use the appropriate input selector
 
 
 
 // @ts-ignore
-    CreateNewAppointment(time: string, serviceText: string, inputText: string): void {
-        cy.get(this.plusButton).click().wait(1000);
+    createNewAppointment(time: string, serviceText: string, inputText: string): void {
+        cy.get(this.plusButton).click();
         cy.get(this.flyOutSelectorElement).eq(0).click();
+        cy.get(this.addNewPatient).should('be.visible');
         cy.get(this.iconSelectorPreBooking).eq(0).click();
         cy.get(this.dateFieldToday).click();
         cy.get(this.iconSelectorPreBooking).eq(1).click();
-        // cy.get(this.hourSelectorinDropDown).eq(Math.floor(Math.random() * 2)+1).click()
         cy.get(this.hourSelector).contains(this.hourSelectorinDropDown, time).click();
-        cy.get(this.inputField).eq(2).click().type(inputText || this.thisTestFirstName).wait(2000);
-        cy.get(this.patientFromList).eq(0).click().wait(2000);
+        cy.get(this.inputField).eq(2).click().type(inputText || this.thisTestFirstName);
+        cy.get(this.patientFromList).eq(0).click();
         // Calendar appointment window
 
         // Select service dropdown
-        cy.get(this.dropDownArrow).eq(2).click().wait(2000);
-        cy.get(this.selectService).contains(serviceText).click();
+        cy.get(this.dropDownArrow).eq(2).click();
+        cy.get(this.selectService).contains(serviceText).click({force: true});
         cy.contains('Reason For Visit').next().click().type('test');
         cy.get('.o-switch').eq(0).click();
         cy.get(this.dropDownArrow).eq(3).click();
-        cy.wait(1000).get(this.itemFromList).eq(0).click();
-        cy.contains('Save').click().wait(3500);
+        cy.get(this.itemFromList).eq(0).click();
+        cy.contains('Save').click({force: true});
         this.checkForConflicts();
-        cy.get(this.arrowMenu).click().wait(2000);
+        cy.get(this.arrowMenu).click();
+        cy.get('div.toast.toast-success').should('be.visible');
     }
 
-    CreateNewAppointmentRepeatMultiple(time: string, serviceText: string, inputText: string): void {
-            cy.get(this.plusButton).click().wait(1000);
+    createNewAppointmentRepeatMultiple(time: string, serviceText: string, inputText: string): void {
+            cy.get(this.plusButton).click();
             cy.get(this.flyOutSelectorElement).eq(0).click();
             cy.get(this.iconSelectorPreBooking).eq(0).click();
             cy.get(this.dateFieldToday).click();
@@ -107,132 +107,144 @@ class Calendar extends BasePage {
             // cy.get(this.hourSelectorinDropDown).eq(Math.floor(Math.random() * 2)+1).click()
             cy.get(this.hourSelector).contains(this.hourSelectorinDropDown, time).click();
             cy.get(this.inputField).eq(2).click().type(inputText || this.thisTestFirstName).wait(2000);
-            cy.get(this.patientFromList).eq(0).click().wait(2000);
+            cy.get(this.patientFromList).eq(0).click();
             // Calendar appointment window
 
             // Select service dropdown
-            cy.get(this.dropDownArrow).eq(2).click().wait(2000);
+            cy.get(this.dropDownArrow).eq(2).click();
             cy.get(this.selectService).contains(serviceText).click();
             cy.contains('Reason For Visit').next().click().type('test');
             cy.get('.o-switch').eq(0).click().wait(300);
             cy.get(this.editRepeatEnds).click().clear().type(2);
             cy.get(this.dropDownArrow).eq(3).click();
-            cy.wait(1000).get(this.itemFromList).eq(0).click();
-            cy.contains('Save').click().wait(3500);
+            cy.get(this.itemFromList).eq(0).click();
+            cy.contains('Save').click();
             this.checkForConflicts();
-            cy.get(this.arrowMenu).click().wait(2000);
+            cy.get(this.arrowMenu).click();
+            cy.get('div.toast.toast-success').should('be.visible');
         }
-    CreateNewAppointmentUniversity(time: string, serviceText: string, inputText: string): void {
-            cy.get(this.plusButton).click().wait(1000);
+
+    createNewAppointmentUniversity(time: string, serviceText: string, inputText: string): void {
+            cy.get(this.plusButton).click();
             cy.get(this.flyOutSelectorElement).eq(0).click();
             cy.get(this.iconSelectorPreBooking).eq(0).click();
             cy.get(this.dateFieldToday).click();
             cy.get(this.iconSelectorPreBooking).eq(1).click();
             // cy.get(this.hourSelectorinDropDown).eq(Math.floor(Math.random() * 2)+1).click()
             cy.get(this.hourSelector).contains(this.hourSelectorinDropDown, time).click();
-            cy.get(this.inputField).eq(2).click().type(inputText || this.thisTestFirstName).wait(2000);
-            cy.get(this.patientFromList).eq(0).click().wait(2000);
+            cy.get(this.inputField).eq(2).click().type(inputText || this.thisTestFirstName);
+            cy.get(this.patientFromList).eq(0).click();
             // Calendar appointment window
 
             // Select service dropdown
-            cy.get(this.dropDownArrow).eq(2).click().wait(2000);
+            cy.get(this.dropDownArrow).eq(2).click();
             cy.get(this.selectService).contains(serviceText).click();
             cy.contains('Reason For Visit').next().click().type('test');
             cy.get('.o-switch').eq(0).click();
             cy.get(this.dropDownArrow).eq(3).click();
-            cy.wait(1000).get(this.itemFromList).eq(0).click();
-            cy.contains('Save').click().wait(3500);
+            cy.get(this.itemFromList).eq(0).click();
+            cy.contains('Save').click();
             this.checkForConflicts();
+            cy.get('div.toast.toast-success').should('be.visible');
         }
 
-    EditAppointment (serviceText: string): void{
+
+    editAppointment (serviceText: string): void{
+        this.checkForShowCancelled();
+        cy.get(this.calendarCellSelector).contains(serviceText).click({force: true});
+        cy.get(this.editCalendarButton).click();
+        cy.get(this.inputField).eq(6).click().type(' EDIT');
+        cy.contains('Save').click();
+        this.checkForConflicts();
+        cy.get(this.saveThisOccurrence).click({ force: true });
+        cy.get('div.toast.toast-success').should('be.visible');
+    }
+
+    editAppointmentRepeat (serviceText: string): void{
         this.checkForShowCancelled();
         cy.get(this.calendarCellSelector).contains(serviceText).click({force: true}).wait(2000);
         cy.get(this.editCalendarButton).click();
         cy.get(this.inputField).eq(6).click().type(' EDIT');
-        cy.contains('Save').click().wait(1000);
+        cy.contains('Save').click();
         this.checkForConflicts();
-        cy.get(this.saveThisOccurrence).click({ force: true }).wait(1000);
+        cy.get(this.editRepeatAll).click({ force: true });
+        cy.get(this.saveThisOccurrence).click();
+        cy.get('div.toast.toast-success').should('be.visible');
     }
 
-    EditAppointmentRepeat (serviceText: string): void{
+    deleteAppointment(appointmentText: string): void {
         this.checkForShowCancelled();
-        cy.get(this.calendarCellSelector).contains(serviceText).click({force: true}).wait(2000);
+        cy.get(this.calendarCellSelector).contains(appointmentText).click({ force: true }).click({force: true});
+        cy.get(this.cancelFromCalendar).click();
+        cy.get(this.cancelAppointment).click();
+        cy.get('div.toast.toast-success').should('be.visible');
+    }
+
+    editAppointmentUniversity (serviceText: string): void{
+        this.checkForShowCancelled();
+        cy.get(this.calendarCellSelector).contains(serviceText).click({force: true});
         cy.get(this.editCalendarButton).click();
         cy.get(this.inputField).eq(6).click().type(' EDIT');
-        cy.contains('Save').click().wait(1000);
+        cy.contains('Save').click();
         this.checkForConflicts();
-        cy.get(this.editRepeatAll).click({ force: true }).wait(1000);
-        cy.get(this.saveThisOccurrence).click().wait(1000);
+        cy.get(this.editRepeatAll).click({ force: true });
+        cy.get(this.saveThisOccurrence).click();
+        cy.get('div.toast.toast-success').should('be.visible');
     }
 
-    DeleteAppointment(appointmentText: string): void {
+    deleteAppointmentMultiple(appointmentText: string): void {
         this.checkForShowCancelled();
-        cy.get(this.calendarCellSelector).contains(appointmentText).click({ force: true }).click({force: true}).wait(2000);
-        cy.get(this.cancelFromCalendar).click().wait(1000);
-        cy.get(this.cancelAppointment).click().wait(1000);
+        cy.get(this.calendarCellSelector).contains(appointmentText).click({ force: true }).click({force: true});
+        cy.get(this.cancelFromCalendar).click();
+        cy.get(this.cancelRepeatAll).click();
+        cy.get(this.cancelAppointment).click();
+        cy.get('div.toast.toast-success').should('be.visible');
     }
 
-    EditAppointmentUniversity (serviceText: string): void{
-        this.checkForShowCancelled();
-        cy.get(this.calendarCellSelector).contains(serviceText).click({force: true}).wait(2000);
-        cy.get(this.editCalendarButton).click();
-        cy.get(this.inputField).eq(6).click().type(' EDIT');
-        cy.contains('Save').click().wait(1000);
-        this.checkForConflicts();
-        cy.get(this.editRepeatAll).click({ force: true }).wait(1000);
-        cy.get(this.saveThisOccurrence).click().wait(1000);
-    }
-
-    DeleteAppointmentMultiple(appointmentText: string): void {
-        this.checkForShowCancelled();
-        cy.get(this.calendarCellSelector).contains(appointmentText).click({ force: true }).click({force: true}).wait(2000);
-        cy.get(this.cancelFromCalendar).click().wait(1000);
-        cy.get(this.cancelRepeatAll).click().wait(1000);
-        cy.get(this.cancelAppointment).click().wait(1000);
-    }
-
-    DeleteAppointment1By1(time: string, serviceText: string, inputText: string): void {
-        cy.get(this.plusButton).click().wait(1000);
+    deleteAppointment1By1(time: string, serviceText: string, inputText: string): void {
+        cy.get(this.plusButton).click();
         cy.get(this.flyOutSelectorElement).eq(0).click();
         cy.get(this.iconSelectorPreBooking).eq(0).click();
         cy.get(this.dateFieldToday).click();
         cy.get(this.iconSelectorPreBooking).eq(1).click();
         cy.get(this.hourSelector).contains(this.hourSelectorinDropDown, time).click();
-        cy.get(this.inputField).eq(2).click().type(inputText || this.thisTestFirstName).wait(2000);
-        cy.get(this.patientFromList).eq(0).click().wait(2000);
-        cy.get(this.dropDownArrow).eq(2).click().wait(2000);
+        cy.get(this.inputField).eq(2).click().type(inputText || this.thisTestFirstName);
+        cy.get(this.patientFromList).eq(0).click();
+        cy.get(this.dropDownArrow).eq(2).click();
         cy.get(this.selectService).contains(serviceText).click();
         cy.contains('Reason For Visit').next().click().type('test');
         cy.get('.o-switch').eq(0).click().wait(300);
         cy.get(this.dropDownArrow).eq(3).click();
         cy.wait(1000).get(this.itemFromList).eq(0).click();
-        cy.contains('Save').click().wait(3500);
+        cy.contains('Save').click();
         this.checkForConflicts();
-        cy.get(this.arrowMenu).click().wait(2000);
+        cy.get(this.arrowMenu).click();
+        cy.get('div.toast.toast-success').should('be.visible');
         this.checkForShowCancelled();
-        cy.get(this.calendarCellSelector).contains(serviceText).click({ force: true }).click({force: true}).wait(2000);
-        cy.get(this.cancelFromCalendar).click().wait(1000);
-        cy.get(this.cancelAppointment).click().wait(1000);
+        cy.get(this.calendarCellSelector).contains(serviceText).click({ force: true }).click({force: true});
+        cy.get(this.cancelFromCalendar).click();
+        cy.get(this.cancelAppointment).click();
+        cy.get('div.toast.toast-success').should('be.visible');
     }
 
-    DeleteAppointmentCharge(appointmentText: string): void {
+    deleteAppointmentCharge(appointmentText: string): void {
         this.checkForShowCancelled();
-        cy.get(this.calendarCellSelector).contains(appointmentText).click({ force: true }).click({force: true}).wait(2000);
-        cy.get(this.cancelFromCalendar).click().wait(1000);
+        cy.get(this.calendarCellSelector).contains(appointmentText).click({ force: true }).click({force: true});
+        cy.get(this.cancelFromCalendar).click();
         cy.get(this.cancelAppointmentCharge).click().clear().type('0.01');
-        cy.get(this.cancelAppointment).click().wait(1000);
+        cy.get(this.cancelAppointment).click();
+        cy.get('div.toast.toast-success').should('be.visible');
     }
 
-    CalendarSendReminder (serviceText: string): void{
+    calendarSendReminder (serviceText: string): void{
             this.checkForShowCancelled();
-            cy.get(this.calendarCellSelector).contains(serviceText).click({force: true}).wait(2000);
+            cy.get(this.calendarCellSelector).contains(serviceText).click({force: true});
             cy.get(this.editCalendarButton).click();
-            cy.contains('Send Reminder').click().wait(1000);
+            cy.contains('Send Reminder').click();
     }
 
-    BookTimeOff (name: string): void{
-        cy.get(this.plusButton).click().wait(1000);
+    bookTimeOff (name: string): void{
+        cy.get(this.plusButton).click();
         cy.get(this.flyOutSelectorElement).eq(1).click();
         cy.get('input.dx-texteditor-input[type="text"][autocomplete="off"]:eq(0)').click().type(name);
         cy.get('div.dx-button-normal.dx-button-mode-contained.dx-widget.dx-dropdowneditor-button[role="button"][aria-label="Select"]:eq(0)').click();
@@ -242,24 +254,26 @@ class Calendar extends BasePage {
         cy.get('div.dx-item-content.dx-list-item-content').contains('Location 1').click();
         cy.get('input.dx-texteditor-input[type="text"][autocomplete="off"]:eq(4)').click().type('12:30').wait(500);
         cy.get('span.dx-button-text').contains('Book Time-Off').click();
+        cy.get('div.toast.toast-success').should('be.visible');
         }
 
-    EditTimeOff (name: string): void{
+    editTimeOff (name: string): void{
         cy.get('.upscheduler__app-desc-transposed').contains(name).click();
         cy.get('button.event-popup__top-actionsbtn:has(i.material-icons:contains("edit"))').click();
         cy.get('input.dx-texteditor-input[type="text"][autocomplete="off"]:eq(3)').click().clear().type('12:15').wait(500);
         cy.get('span.dx-button-text').contains('Update Time-Off').click();
+        cy.get('div.toast.toast-success').should('be.visible');
         }
 
-    CancelTimeOff (name: string): void{
+    cancelTimeOff (name: string): void{
         cy.get('.upscheduler__app-desc-transposed').contains(name).click();
         cy.get('button.event-popup__top-actionsbtn:has(i.material-icons:contains("edit"))').click();
         cy.contains('Cancel Time off').click();
         cy.contains('Yes').click();
         }
 
-    BookTimeOffRepeat (name: string): void{
-        cy.get(this.plusButton).click().wait(1000);
+    bookTimeOffRepeat (name: string): void{
+        cy.get(this.plusButton).click();
         cy.get(this.flyOutSelectorElement).eq(1).click();
         cy.get('input.dx-texteditor-input[type="text"][autocomplete="off"]:eq(0)').click().type(name);
         cy.get('div.dx-button-normal.dx-button-mode-contained.dx-widget.dx-dropdowneditor-button[role="button"][aria-label="Select"]:eq(0)').click();
@@ -270,17 +284,19 @@ class Calendar extends BasePage {
         cy.get('input.dx-texteditor-input[type="text"][autocomplete="off"]:eq(4)').click().type('2:30').wait(500);
         cy.get('label.o-switch').trigger('mouseover').wait(100).click();
         cy.get('span.dx-button-text').contains('Book Time-Off').click();
+        cy.get('div.toast.toast-success').should('be.visible');
         }
 
-    EditTimeOffRepeat (name: string): void{
-                             cy.get('.upscheduler__app-desc-transposed').contains(name).click();
-                             cy.get('button.event-popup__top-actionsbtn:has(i.material-icons:contains("edit"))').click();
-                             cy.get('input.dx-texteditor-input[type="text"][autocomplete="off"]:eq(3)').click().clear().type('2:15').wait(500);
-                             cy.get('span.dx-button-text').contains('Update Time-Off').click();
-                             }
+    editTimeOffRepeat (name: string): void{
+        cy.get('.upscheduler__app-desc-transposed').contains(name).click();
+        cy.get('button.event-popup__top-actionsbtn:has(i.material-icons:contains("edit"))').click();
+        cy.get('input.dx-texteditor-input[type="text"][autocomplete="off"]:eq(3)').click().clear().type('2:15').wait(500);
+        cy.get('span.dx-button-text').contains('Update Time-Off').click();
+        cy.get('div.toast.toast-success').should('be.visible');
+        }
 
-    CancelTimeOff1By1 (name: string): void{
-        cy.get(this.plusButton).click().wait(1000);
+    cancelTimeOff1By1 (name: string): void{
+        cy.get(this.plusButton).click();
         cy.get(this.flyOutSelectorElement).eq(1).click();
         cy.get('input.dx-texteditor-input[type="text"][autocomplete="off"]:eq(0)').click().type(name);
         cy.get('div.dx-button-normal.dx-button-mode-contained.dx-widget.dx-dropdowneditor-button[role="button"][aria-label="Select"]:eq(0)').click();
@@ -294,16 +310,18 @@ class Calendar extends BasePage {
         cy.get('button.event-popup__top-actionsbtn:has(i.material-icons:contains("edit"))').click();
         cy.contains('Cancel Time off').click();
         cy.contains('Yes').click();
+        cy.get('div.toast.toast-success').should('be.visible');
         }
 
-    CancelTimeOffRepeat (name: string): void{
-                               cy.get('.upscheduler__app-desc-transposed').contains(name).click();
-                               cy.get('button.event-popup__top-actionsbtn:has(i.material-icons:contains("edit"))').click();
-                               cy.contains('Cancel Time off').click();
-                               cy.contains('Yes').click();
-                               }
+    cancelTimeOffRepeat (name: string): void{
+            cy.get('.upscheduler__app-desc-transposed').contains(name).click();
+            cy.get('button.event-popup__top-actionsbtn:has(i.material-icons:contains("edit"))').click();
+            cy.contains('Cancel Time off').click();
+            cy.contains('Yes').click();
+            cy.get('div.toast.toast-success').should('be.visible');
+            }
 
-    PrintStatement(): void {
+    printStatement(): void {
             cy.get(this.plusButton).click().wait(1000);
             cy.get(this.flyOutSelectorElement).eq(2).click();
             cy.get('div.dx-texteditor-input-container input.dx-texteditor-input:eq(0)').click();
@@ -315,15 +333,15 @@ class Calendar extends BasePage {
             cy.get('div.dx-button-content > span.dx-button-text').contains('Print').click();
             }
 
-    BeginIntake(appointmentText: string): void{
+    beginIntake(appointmentText: string): void{
         this.checkForShowCancelled();
-        cy.get(this.calendarCellSelector).contains(appointmentText).click({force: true}).wait(2000);
+        cy.get(this.calendarCellSelector).contains(appointmentText).click({force: true});
         cy.get('i.dx-icon.dx-icon-spindown.dx-icon-right:eq(2)').click().then(() => {
           cy.contains('On Time').then(($elem) => {
             if ($elem.length > 0) {
-              cy.contains('On Time').click({ force: true }).wait(3500);
+              cy.contains('On Time').click({ force: true });
             } else {
-              cy.contains('Continue').click({ force: true }).wait(3500);
+              cy.contains('Continue').click({ force: true });
             }
           });
         });
@@ -333,7 +351,7 @@ class Calendar extends BasePage {
 
         }
 
-    DragAndDrop(appointmentText: string): void{
+    dragAndDrop(appointmentText: string): void{
         this.checkForShowCancelled();
         cy.get('.upscheduler__app').contains(appointmentText)
             .trigger('mousedown', { button: 0, force: true })
@@ -341,15 +359,15 @@ class Calendar extends BasePage {
             .trigger('mouseup', { force: true });    // Release the mouse
         }
 
-     CreateNewPatient(): void {
+     createNewPatient(): void {
          // Generate a random first name and store it in thisTestFirstName
          //this.thisTestFirstName = this.generateRandomString(10);
          const thisTestFirstName = this.generateRandomString(10);
          setThisTestFirstName(thisTestFirstName);
-         cy.get(this.plusButton).click().wait(1000);
+         cy.get(this.plusButton).click();
          cy.get(this.flyOutSelectorElement).eq(0).click();
          cy.get(this.iconSelectorPreBooking).eq(0).click();
-         cy.get(this.addNewPatient).click().wait(1000);
+         cy.get(this.addNewPatient).click();
 
          // Clear the first name field and wait for it to be cleared
          cy.get(this.patientFirstName).click().clear().should('be.empty');
@@ -363,17 +381,17 @@ class Calendar extends BasePage {
          cy.get(this.createPatientContinue).click();
 
          // Close the appointment modal if needed
-         cy.get(this.closeAppointment).click().wait(2000);
+         cy.get(this.closeAppointment).click();
 
      }
 
 
     checkForConflicts():void{
+        cy.wait(300);
         cy.get('body').then($box => {
                 const conflictExists = $box.text().includes('Continue and Save')
                 if (conflictExists) {
                     cy.contains('Continue and Save').click();
-                    cy.wait(2000);
                 }
             }
         )
@@ -386,7 +404,7 @@ class Calendar extends BasePage {
                     if (isChecked) {
                         // If the checkbox is checked, click it to uncheck
                         cy.get('#cmn-toggle-2').click({ force: true });
-                        cy.wait(2000);
+                        cy.wait(200);
                     }
                 });
             }
@@ -400,19 +418,17 @@ class Calendar extends BasePage {
         return randomString;
     }
     //Hall Of Shame
-      CreateNewAppointmentCCPENewCard (time: string, serviceText: string, inputText: string): void {
+      createNewAppointmentCCPENewCard (time: string, serviceText: string, inputText: string): void {
               const thisTestFirstName = getThisTestFirstName();
               cy.get(this.plusButton).click().wait(1000);
               cy.get(this.flyOutSelectorElement).eq(0).click();
               cy.get(this.iconSelectorPreBooking).eq(0).click();
               cy.get(this.dateFieldToday).click();
               cy.get(this.iconSelectorPreBooking).eq(1).click();
-              // cy.get(this.hourSelectorinDropDown).eq(Math.floor(Math.random() * 2)+1).click()
               cy.get(this.hourSelector).contains(this.hourSelectorinDropDown, time).click();
               cy.get(this.inputField).eq(2).click().type(inputText || thisTestFirstName).wait(2000);
               cy.get(this.patientFromList).eq(0).click().wait(2000);
               // Calendar appointment window
-
               // Select service dropdown
               cy.get(this.dropDownArrow).eq(2).click().wait(2000);
               cy.get(this.selectService).contains(serviceText).click();
@@ -424,90 +440,7 @@ class Calendar extends BasePage {
               cy.get(this.cardSelect).contains('Add new card').click().wait(500);
               cy.get(this.cardNewName).click().clear().type('Alexandru Vlaicu').wait(500);
               cy.get(this.cardNewZip).click().type('30005').wait(500);
-              // Get the coordinates of the element
-            /*  cy.get(this.cardNewCard).then($element => {
-                // Get the coordinates of the element
-                const rect = $element[0].getBoundingClientRect();
-                const centerX = rect.left + rect.width / 2;
-                const centerY = rect.top + rect.height / 2;
-
-                // Trigger a mouse click event at the center of the element
-                cy.window().then(win => {
-                  win.document.elementFromPoint(centerX, centerY).click();
-                });
-              });
-
-              // Type '123' into the element
-              cy.get(this.cardNewCard).type('123');*/
-
               cy.get(this.cardNewCard).click().wait(500).type('5556710470864589').wait(500)
-             /* cy.get('#fullsteam-hosted-card-number-frame').then($iframe => {
-                // Get the content window of the iframe
-                const contentWindow = $iframe.contents().get(0);
-
-                // Find and interact with the #card-number element within the iframe
-                cy.wrap(contentWindow)
-                  .find('#card-number')
-                  .click()
-                  .type('5556710470864589');
-              }); */
-         /* cy.iframe('#fullsteam-hosted-card-number-frame').then(iframe => {
-              // Find and interact with the #card-number element within the iframe
-              iframe.find('#card-number')
-                  .click()
-                  .type('5556710470864589');
-          });*/
-             const getIframeDocument = () => {
-               // Select the iframe containing the card-number element
-               return cy.get('iframe#fullsteam-hosted-card-number-frame')
-                 // Access the contentDocument property of the iframe
-                 .its('0.contentDocument').should('exist');
-             }
-
-             const getIframeBody = () => {
-               // Get the document within the iframe
-               return getIframeDocument()
-                 // Automatically retries until body is loaded
-                 .its('body').should('not.be.undefined')
-                 // Wraps the body DOM element to allow chaining more Cypress commands
-                 .then(cy.wrap);
-             }
-
-             it('interacts with elements inside the iframe', () => {
-               // Find the iframe body and interact with the card-number element inside it
-               getIframeBody().find('#card-number')
-                 .click()
-                 .type('5556710470864589');
-             });
-            /* cy.get('#fullsteam-hosted-card-number-frame').should('be.visible').then($iframe => {
-                // Execute JavaScript in the browser context to interact with the iframe content
-                cy.window().then(win => {
-                  // Get the iframe's content window
-                  const iframeWindow = $iframe[0].contentWindow;
-
-                  // Ensure the content window is not null
-                  if (iframeWindow) {
-                    // Execute JavaScript code within the iframe's context
-                    win.eval(`
-                      // Find the #card-number element within the iframe document
-                      var cardNumberInput = document.querySelector('#card-number');
-
-                      // Check if the element exists and is not disabled or readonly before focusing on it and setting its value
-                      if (cardNumberInput && !cardNumberInput.disabled && !cardNumberInput.readOnly) {
-                        cardNumberInput.focus();
-                        cardNumberInput.value = '5556710470864589';
-                      } else {
-                        console.error('The #card-number input field is not found or is disabled/readonly.');
-                      }
-                    `);
-                  } else {
-                    // Log an error if the content window is null
-                    Cypress.log({ error: true, message: 'Iframe content window is null' });
-                  }
-                });
-              });*/
-             // cy.get(this.cardNewMonthDropdown).select('10');
-            //  cy.get(this.cardNewYearDropdown).select('2027');
               cy.get(this.cardNewCVV).click().type('508');
               cy.get(this.cardNewSave).click().wait(1000);
              }
