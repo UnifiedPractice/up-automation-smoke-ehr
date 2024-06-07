@@ -12,11 +12,16 @@
     }
 
     logoutFromEHR(): void {
-        cy.get('.fa.fa-chevron-down').click();
+        cy.get('.fa.fa-chevron-down').should('be.visible').click({force:true});
         cy.contains('Logout').click();
         cy.contains('Forgot your password').should('be.visible');
     }
 
+     logoutFromEHRAsFrontDesk(): void {
+         cy.wait(1000).contains('Hi, frontdesk').should('be.visible').click()
+         cy.contains('Logout').click();
+         cy.contains('Forgot your password').should('be.visible');
+     }
     loginPPNCFPCCPE(): void {
         cy.intercept('https://staging.unifiedpractice.com/Public/Account/CollectPendoAndHubspotStats?_=*').as('login')
         cy.get(this.username).type('PPNCFPCCPE');
@@ -33,6 +38,12 @@
 
      loginFrontDesk(): void{
          cy.get(this.username).type('frontdesksmokecypress');
+         cy.get(this.password).type('password');
+         cy.contains('Login').click();
+     }
+
+     loginEnhanced(): void{
+         cy.get(this.username).type('enhancedclinic');
          cy.get(this.password).type('password');
          cy.contains('Login').click();
      }

@@ -34,9 +34,10 @@ class Calendar extends BasePage {
     public itemFromList: string = '.dx-template-wrapper.dx-item-content.dx-list-item-content'
     public arrowMenu: string = '.icon.hamburger.hamburger-arrow-left'
     public selectService: string = '.dx-item-content.dx-list-item-content'
+    public chatButton: string = '.o-button.o-button--classicsimple.edit-appointment__footer-action.dx-button.dx-button-normal.dx-button-mode-contained.dx-widget.dx-button-has-text.ng-star-inserted';
 
 // @ts-ignore
-    CreateNewAppointmentASAP(): void{
+    createNewAppointmentASAP(): void{
         cy.get(this.plusButton).click();
         cy.intercept('https://data.pendo.io/data/guide.js/**').as('modalCalendarIntercept')
         cy.get(this.flyOutSelectorElement).eq(0).click({force:true});
@@ -74,7 +75,7 @@ class Calendar extends BasePage {
         cy.get(this.arrowMenu).should('be.visible').click()
     }
 
-    CreateNewAppointmentOnUniversities(): void{
+    createNewAppointmentOnUniversities(): void{
         cy.get(this.plusButton).should('be.visible').click();
         cy.get(this.flyOutSelectorElement).eq(0).should('be.visible').click({force:true});
         cy.get(this.iconSelectorPreBooking).eq(0).click({force:true});
@@ -110,7 +111,7 @@ class Calendar extends BasePage {
         //cy.get(this.arrowMenu).should('be.visible').click()
     }
 
-    CreateNewAppointmentForInsurance(): void{
+    createNewAppointmentForInsurance(): void{
         cy.get(this.plusButton).click();
         cy.intercept('https://data.pendo.io/data/guide.js/**').as('modalCalendarIntercept')
         cy.get(this.flyOutSelectorElement).eq(0).click({force:true});
@@ -145,8 +146,65 @@ class Calendar extends BasePage {
                 });
             }
         })
-        // cy.get(this.arrowMenu).should('be.visible').click()
+         cy.get(this.arrowMenu).should('be.visible').click()
     }
+
+    createNewAppointmentwithPPPatient(): void{
+        cy.get(this.plusButton).click();
+        cy.intercept('https://data.pendo.io/data/guide.js/**').as('modalCalendarIntercept')
+        cy.get(this.flyOutSelectorElement).eq(0).click({force:true});
+        cy.wait('@modalCalendarIntercept')
+        cy.get(this.iconSelectorPreBooking).eq(0).click({force:true});
+        cy.get(this.dateFieldToday).click();
+        cy.get(this.iconSelectorPreBooking).eq(1).click();
+        cy.get(this.hourSelectorinDropDown).eq(Math.floor(Math.random() * 4)+1).click()
+        cy.intercept('https://staging.unifiedpractice.com/Public/coreapi/api/clinic/patients?**').as('listPatientIntercept')
+        cy.get(this.inputField).eq(2).click().type('test alexandru')
+        cy.wait('@listPatientIntercept')
+        cy.get(this.patientFromList).eq(0).click()
+        //Calendar appointment window
+
+        cy.get(this.chatButton).should('be.visible').click()
+    }
+
+    createNewAppointmentforReminder(): void{
+        cy.get(this.plusButton).click();
+        cy.intercept('https://data.pendo.io/data/guide.js/**').as('modalCalendarIntercept')
+        cy.get(this.flyOutSelectorElement).eq(0).click({force:true});
+        cy.wait('@modalCalendarIntercept')
+        cy.get(this.iconSelectorPreBooking).eq(0).click({force:true});
+        cy.get(this.dateFieldToday).click();
+        cy.get(this.iconSelectorPreBooking).eq(1).click();
+        cy.get(this.hourSelectorinDropDown).eq(Math.floor(Math.random() * 4)+1).click()
+        cy.intercept('https://staging.unifiedpractice.com/Public/coreapi/api/clinic/patients?**').as('listPatientIntercept')
+        cy.get(this.inputField).eq(2).click().type('test alexandru')
+        cy.wait('@listPatientIntercept')
+        cy.get(this.patientFromList).eq(0).click()
+        //Calendar appointment window
+
+        //Select service dropdown
+        cy.get(this.dropDownArrow).eq(2).click({force:true})
+        cy.get(this.selectService).eq(0).click({force:true})
+
+        cy.contains('Reason For Visit').next().click().type('test')
+        cy.get('.o-switch').eq(0).click()
+        cy.get(this.dropDownArrow).eq(3).click();
+        cy.get(this.itemFromList).eq(0).click();
+        cy.intercept('https://staging.unifiedpractice.com/Public/coreapi/api/scheduling/calendar/events/appointments/scheduling-conflicts').as('conflictIntercept')
+        cy.contains('Save').click()
+        cy.wait('@conflictIntercept').then((interception) => {
+            if (interception) {
+                cy.get('body').then($box => {
+                    const conflictExists = $box.text().includes('Continue and Save');
+                    if (conflictExists) {
+                        cy.contains('Continue and Save').click();
+                    }
+                });
+            }
+        })
+    }
+
+
 
     checkForConflicts():void{
         cy.get('body').then($box => {

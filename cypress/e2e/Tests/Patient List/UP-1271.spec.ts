@@ -16,7 +16,7 @@ describe('Automation test for UP-1271', () => {
 
         navigate.extendMenu();
         navigate.selectCalendar()
-        calendar.CreateNewAppointmentForInsurance();
+        calendar.createNewAppointmentForInsurance();
         navigate.selectMyPatientsfromCalendarWindow();
         patientList.generateSuperbill();
     })

@@ -16,7 +16,7 @@ describe('Automation test for UP-1270', () => {
 
         navigate.extendMenu();
         navigate.selectCalendar()
-        calendar.CreateNewAppointmentForInsurance();
+        calendar.createNewAppointmentForInsurance();
         navigate.selectMyPatientsfromCalendarWindow();
 
         patientList.createClaim();

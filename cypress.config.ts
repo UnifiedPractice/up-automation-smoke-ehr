@@ -7,11 +7,11 @@ export default defineConfig({
     video: true,
   projectId: "5euxj8",
   pageLoadTimeout: 140000,
-  defaultCommandTimeout: 10000,
-    retries: {
-    runMode: 8,
-    openMode: 8
-  },
+  defaultCommandTimeout: 30000,
+  //   retries: {
+  //   runMode: 8,
+  //   openMode: 8
+  // },
   e2e: {
     // We've imported your old cypress plugins here.
     // You may want to clean this up later by importing these.
@@ -25,6 +25,8 @@ export default defineConfig({
         'cypress/e2e/Tests/Patient List/*.spec.ts',
         'cypress/e2e/Tests/Patient Portal/*.spec.ts',
         'cypress/e2e/Tests/Chat/*.spec.ts',
+        'cypress/e2e/Tests/Other/*.spec.ts',
+
 
 
     ]

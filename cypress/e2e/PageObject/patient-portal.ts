@@ -131,8 +131,7 @@ class PatientPortal extends BasePage {
     }
 
     proceedLogin() : void {
-        cy.contains('If you have an account, please login to book your appointment. If not, create one below.').should('be.visible')
-        cy.get('.inp').eq(0).click().type('automation22@email.com');
+        cy.get('.inp').eq(0).should('be.visible').click().type('automation22@email.com');
         cy.contains('Password').parent().click().type('password');
         cy.get(this.loginButtonSelector).click();
 
@@ -144,10 +143,9 @@ class PatientPortal extends BasePage {
             if($el.text().includes('Logout')){
                 cy.get(this.burgerMenuSelector).click({force:true});
                 cy.contains('Logout').click({force:true});
-                cy.wait(700);
             }
-            cy.get('.logo-symbol').click({ force: true })
-            cy.get('.mat-menu-content').click({ force: true });
+            cy.get('.logo-symbol').should('be.visible').click({ force: true })
+            cy.get('.mat-menu-content').should('be.visible').click().wait(1500);
         })
     }
 
@@ -351,8 +349,7 @@ class PatientPortal extends BasePage {
 
     checkVisibilityUpcoming(): void {
         this.selectAppointmentsfromMenu();
-        cy.wait(14500)
-        cy.get('.text-center.mt-4').then($button => {
+        cy.get('.text-center.mt-4').should('be.visible').then($button => {
             if($button.text().includes('Show more upcoming')) {
                 cy.intercept('https://pp.api.staging.unifiedpractice.com/t/automation-cypress/Appointments?Direction=2&Take=6&Skip=*').as('upcoming')
                 cy.contains('Show more upcoming').click()
@@ -852,9 +849,9 @@ class PatientPortal extends BasePage {
     }
 
     selectAppointmentsfromMenu(): void{
-        cy.wait(2500).get(this.burgerMenuSelector).click()
+        cy.get(this.burgerMenuSelector).should('be.visible').click()
         cy.get('.cdk-overlay-pane').within( () =>
-            cy.contains('My Appointments').click({force:true}).wait(11000)
+            cy.contains('My Appointments').should('be.visible').click({force:true})
         )
     }
 
@@ -1124,6 +1121,10 @@ class PatientPortal extends BasePage {
 
     checkMessageInEHR():void{
         cy.contains('.flex.flex-row.p-4.w-full.flex-grow.gap-2.cursor-pointer.place-content-start.items-center','automationsmokecypress').should('be.visible').click()
+        cy.contains(getDayMonthHour).should('be.visible');
+    }
+    checkMessageInEHRfromFrontDesk():void{
+        cy.contains('.flex.flex-row.p-4.w-full.flex-grow.gap-2.cursor-pointer.place-content-start.items-center','frontdesk').should('be.visible').click()
         cy.contains(getDayMonthHour).should('be.visible');
     }
 

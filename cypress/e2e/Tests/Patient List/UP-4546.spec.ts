@@ -16,7 +16,7 @@ describe('Automation test for UP-4546', () => {
 
         navigate.extendMenu();
         navigate.selectCalendar()
-        calendar.CreateNewAppointmentOnUniversities();
+        calendar.createNewAppointmentOnUniversities();
         navigate.extendMenuforUniversities();
         navigate.selectMyPatientsSecondSelector();
     })

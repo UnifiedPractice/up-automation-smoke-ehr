@@ -22,7 +22,7 @@ describe('Automation test for UP-4406', () => {
 
         navigate.extendMenu();
         navigate.selectCalendar()
-        calendar.CreateNewAppointmentASAP();
+        calendar.createNewAppointmentASAP();
 
         navigate.selectMyPatientsSecondSelector();
         patientList.selectPatientAlexandru();

@@ -1,29 +1,31 @@
 import LoginPage from "../../PageObject/login-page"
 import SideBarNavigate from "../../PageObject/side-bar-menu"
 import PatientPortal from "../../PageObject/patient-portal"
-import ClinicLocations from "../../PageObject/clinic-settings/clinic-locations"
-import BasePage from "../../PageObject/base-page"
-import DrawerModal from "../../PageObject/drawer-modal"
+import patientList from "../../PageObject/patient-list";
+import Chat from "../../PageObject/chat";
 import Calendar from "../../PageObject/calendar";
 import PatientList from "../../PageObject/patient-list";
 
 
-describe('Automation test for UP-1264', () => {
+describe('Automation test for UP-4436', () => {
     const login = new LoginPage();
+    const pp = new PatientPortal() ;
     const navigate = new SideBarNavigate();
-    const calendar= new Calendar();
-    const patientList= new PatientList();
+    const chat = new Chat();
+    const calendar = new Calendar();
+    const patientList = new PatientList() ;
 
-    it("UP-1264", function () {
+    it("UP-4436", function () {
+
         login.goToStaging();
         login.loginAutomation();
 
         navigate.extendMenu();
         navigate.selectCalendar()
-        calendar.createNewAppointmentASAP();
-        navigate.selectMyPatientsfromCalendarWindow();
+        calendar.createNewAppointmentwithPPPatient();
 
-        patientList.beginIntakeAndPrint();
+
+
 
 
 

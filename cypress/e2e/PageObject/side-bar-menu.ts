@@ -65,6 +65,11 @@ class SideBarNavigate  {
         cy.wait(1100)
     }
 
+    selectProductSale(): void {
+        cy.get(this.level1Selector).eq(7).click()
+        cy.wait(1100)
+    }
+
     selectCS(name: string) : void {
 
         cy.wait(2500).get(this.level1Selector).eq(10).click({force:true});

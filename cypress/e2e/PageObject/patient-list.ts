@@ -216,7 +216,7 @@ class PatientList {
     createClaim():void {
         this.selectFirstPatientByDate();
         cy.intercept('https://staging.unifiedpractice.com/Public/PatientManagement/GetAppointmentInfo?calendarAppointmentId=**').as('apptIntercept')
-        cy.get(this.appointmentTab).eq(0).click()
+        cy.get(this.appointmentTab).eq(0).should('be.visible').click()
         cy.wait('@apptIntercept')
         cy.get(this.cancelButtonSelector).scrollIntoView()
         cy.contains('View Claim', { timeout: 0 }).then($viewClaim => {

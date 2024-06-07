@@ -16,7 +16,7 @@ describe('Automation test for UP-1267', () => {
 
         navigate.extendMenu();
         navigate.selectCalendar()
-        calendar.CreateNewAppointmentASAP();
+        calendar.createNewAppointmentASAP();
         navigate.selectMyPatientsfromCalendarWindow();
         patientList.sendReminder();
     })

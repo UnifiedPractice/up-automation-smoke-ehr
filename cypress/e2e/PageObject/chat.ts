@@ -33,6 +33,28 @@ class Chat  {
         cy.contains(getDayMonthHour).should('be.visible');
     }
 
+    sendMessageAsFrontDesk():void{
+        cy.contains('Conversations').should('be.visible').get(this.plusButtonSelector).click();
+        cy.contains('Start a Chat').should('be.visible')
+        cy.intercept('https://staging.unifiedpractice.com/Public/coreapi/api/clinic/patients?Page=1&Count=10&SearchTerm=test&HasPatientPortalAccount=true').as('listPatientIntercept')
+        cy.get(this.fieldSearchingNameSelector).click().clear().type('test');
+        cy.wait('@listPatientIntercept')
+        cy.contains(this.currentEmailInUse).click()
+        cy.get(this.startChatButtonSelector).click();
+        cy.contains('Conversations').should('be.visible');
+        cy.get('.rta').click().type('The next time will be automatically generated to verify that the message was sent to the EHR: ' + getDayMonthHour).trigger('keydown', {
+            key: 'Enter',})
+        cy.contains(getDayMonthHour).should('be.visible');
+    }
+
+    sendMessageToTeammateasEnhanced():void{
+        cy.contains('Conversations').should('be.visible').get(this.plusButtonSelector).click();
+        cy.contains('Start a Chat').should('be.visible')
+        cy.contains('Start a chat with one or more of your teammates').should('be.visible').click()
+        cy.contains('Unlock the ability to chat with your patients and teammates. Click here to send a request to our team.').should('be.visible')
+
+    }
+
 }
 
 export default Chat
