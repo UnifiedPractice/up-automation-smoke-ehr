@@ -6,7 +6,7 @@ import OnboardingForms from "../../PageObject/clinic-settings/clinic-onboarding-
 import Calendar from "../../PageObject/calendar";
 import ProductSale from "../../PageObject/product-sale";
 
-describe('Automation test for UP-955', () => {
+describe('Automation test for UP-1272', () => {
     const login = new LoginPage();
     const pp = new PatientPortal() ;
     const navigate = new SideBarNavigate();
@@ -17,7 +17,7 @@ describe('Automation test for UP-955', () => {
 
 
 
-    it("UP-955", function () {
+    it("UP-1272", function () {
 
         login.goToStaging();
         login.loginAutomation();

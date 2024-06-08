@@ -204,6 +204,33 @@ class Calendar extends BasePage {
         })
     }
 
+    addNewPatientandInviteforPP(): void{
+        cy.get(this.plusButton).click();
+        cy.intercept('https://data.pendo.io/data/guide.js/**').as('modalCalendarIntercept')
+        cy.get(this.flyOutSelectorElement).eq(0).click({force:true});
+        cy.wait('@modalCalendarIntercept')
+        cy.get(this.iconSelectorPreBooking).eq(0).click({force:true});
+        cy.get(this.dateFieldToday).click();
+        // cy.get(this.iconSelectorPreBooking).eq(1).click();
+        cy.contains('Add New Patient').should('be.visible').click();
+        cy.get('.user-box__input').eq(0).should('be.visible').click().type('Automation Smoke'+getDayMonthHour);
+        cy.get('.user-box__input').eq(2).should('be.visible').click().type('Automation Smoke Last'+getDayMonthHour);
+        cy.get('.user-box__input').eq(3).should('be.visible').click().type('engineer'+getDayMonthHour+'@email.com');
+        cy.contains('Continue').should('be.visible').click()
+        cy.contains('Invite').should('be.visible').click();
+        cy.contains('Invite was sent').should('be.visible');
+
+        //Go to staging emails
+        cy.visit('https://staging.unifiedpractice.com/dirlisting/d379136412c1476d9397f9ee3b606448/notifications')
+        cy.contains('emails').invoke('removeAttr', 'target').click();
+        cy.wait(500)
+        cy.get('a').eq(7).invoke('removeAttr', 'target').click()
+        cy.get('a').eq(7).invoke('removeAttr', 'target').click()
+        cy.contains('Patient Portal Invite').should('be.visible')
+
+
+
+    }
 
 
     checkForConflicts():void{

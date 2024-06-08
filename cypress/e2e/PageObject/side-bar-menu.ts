@@ -19,6 +19,10 @@ class SideBarNavigate  {
     selectBilling(name: string) : void {
         cy.wait(2500).get(this.level2Selector).contains(name).click({force:true});
     }
+
+    selectBillingfromProductSale(name: string) : void {
+        cy.get('.site-menu-title').contains(name).click({force:true});
+    }
     extendMenu() : void{
         cy.get('.navbar-header-left').should('be.visible').then(($el) => {
             if ($el.hasClass('small')) {
@@ -70,13 +74,19 @@ class SideBarNavigate  {
         cy.wait(1100)
     }
 
+    selectBilling(name: string) : void {
+
+        cy.wait(2500).get(this.level1Selector).eq(4).click({force:true});
+        cy.wait(2500).get(this.level2Selector).contains(name).click({force:true});
+
+    }
+
     selectCS(name: string) : void {
 
         cy.wait(2500).get(this.level1Selector).eq(10).click({force:true});
         cy.wait(2500).get(this.level2Selector).contains(name).click({force:true});
 
     }
-
     selectLiveChat(): void{
         cy.visit('https://staging.unifiedpractice.com/Public/app/#/chat')
         cy.get('.mat-button-wrapper').click();

@@ -4,6 +4,8 @@ import "cypress-localstorage-commands"
 class ProductSale  {
     public fieldSelector: string = '.dx-texteditor-input';
     public dropDownElementSelector: string = '.dx-template-wrapper.dx-item-content.dx-list-item-content'
+    public closePopupProductSale: string = '.dx-icon.dx-icon-close';
+    public leftArrowMenuSelector: string = '.icon.hamburger.hamburger-arrow-left';
 
     findAndSelectPatient(name:string): void{
         cy.get(this.fieldSelector).eq(0).should('be.visible').click().type(name);
@@ -19,8 +21,12 @@ class ProductSale  {
         cy.contains('Receive Payment').should('be.visible').click()
         cy.contains('Payment Method').should('be.visible').next().click();
         cy.contains('Cash').should('be.visible').click({force:true});
-        cy.contains('Receive $').should('be.visible').click();
-        cy.contains('Payment received').should('be.visible').click();
+        cy.contains('Receive $').should('be.visible').invoke('removeAttr', 'target').click();
+        cy.contains('Payment received').should('be.visible');
+    }
+    continueReceivePaymentforRefund(): void{
+        cy.get(this.closePopupProductSale).eq(1).click();
+        cy.get(this.leftArrowMenuSelector).should('be.visible').click()
     }
 
     selectCashMethod(): void{
