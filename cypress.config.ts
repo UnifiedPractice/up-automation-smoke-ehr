@@ -2,10 +2,10 @@ import { defineConfig } from 'cypress'
 import {verifyDownloadTasks} from "cy-verify-downloads";
 const { verifyDownloadTasks } = require('cy-verify-downloads');
 
-
 export default defineConfig({
     video: true,
-  projectId: "5euxj8",
+    chromeWebSecurity: false,
+    projectId: "5euxj8",
   pageLoadTimeout: 140000,
   defaultCommandTimeout: 30000,
   //   retries: {
@@ -26,6 +26,8 @@ export default defineConfig({
         'cypress/e2e/Tests/Patient Portal/*.spec.ts',
         'cypress/e2e/Tests/Chat/*.spec.ts',
         'cypress/e2e/Tests/Other/*.spec.ts',
+        'cypress/e2e/Tests/Fullsteam/*.spec.ts',
+
 
 
 

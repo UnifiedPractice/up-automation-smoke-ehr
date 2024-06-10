@@ -1,8 +1,10 @@
 {
   "devDependencies": {
     "cy-verify-downloads": "^0.2.4",
-    "cypress": "^13.10.0",
+    "cypress": "^13.11.0",
+    "cypress-iframe": "^1.0.1",
     "cypress-localstorage-commands": "^2.2.5",
+    "cypress-plugin-stripe-elements": "^1.0.2",
     "cypress-wait-until": "^3.0.1",
     "typescript": "^5.4.3"
   },
