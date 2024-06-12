@@ -1,6 +1,8 @@
 /// <reference types="cypress" />
 import { format } from 'date-fns'
 import SideBarNavigate from "../PageObject/side-bar-menu"
+import Calendar from "./calendar";
+import calendar from "./calendar";
 export const getDayMonthHour: string = format(new Date(), "MMMMddhmm")
 const navigate = new SideBarNavigate();
 
@@ -37,6 +39,14 @@ class PatientList {
     private cptFieldSelector : string = '#billingCPT_autocomplete';
     private dropdownCptSelector: string = '.tt-dropdown-menu';
     private chatIconSelector: string = '.icon-comment';
+    private payerTypeSelector: string = '.btn-group.bootstrap-select.form-control.js-payerType';
+    private methodTypeSelector: string = '.btn-group.bootstrap-select.form-control.js-paymentMethodType';
+    private saveButtonPaymentModalSelector: string = '.button.no-select.default.js-save';
+    private listCardSavedSelector: string = '.btn-group.bootstrap-select.form-control.js-savedCards';
+    private chargeCardSelector: string = '.js-existingCardChargeBtn';
+
+
+    const calendar= new Calendar();
 
     checkContinueBeginIntake(): void {
         cy.get('body').then($box => {
@@ -208,10 +218,66 @@ class PatientList {
         })
         cy.get(this.billingInfoSaveSelector).click();
         cy.contains('The changes have been saved').should('be.visible')
-
         cy.get(this.receivePaymentSelector).click();
-        cy.get(this.applyCurrentVisitSelector).should('be.visible').click();
+        //Receive payment window
+        cy.get(this.payerTypeSelector).should('be.visible').click();
+
+        cy.get('.js-receivePaymentForm').within(() => {
+            cy.contains('li', 'Patient').within(() => {
+                cy.get('a').click();
+            });
+
+        cy.get(this.methodTypeSelector).should('be.visible').click();
+            cy.contains('li', 'Cash').within(() => {
+                cy.get('a').click();
+            });
+
+        });
+        cy.wait(500).get(this.applyCurrentVisitSelector).should('be.visible').click();
+
+        cy.get('.form-control.js-amountApplied.js-amountAppliedServices.text-right').scrollIntoView().should('be.visible').click().type('10');
+        cy.get(this.saveButtonPaymentModalSelector).should('be.visible').click();
     }
+
+    addCPTCodeAndReceivePaymentwithCard():void {
+        this.selectFirstPatientByDate();
+        cy.get(this.appointmentTab).eq(0).click()
+        cy.contains('Billing Status').should('be.visible')
+        cy.get(this.cptFieldSelector).click({force:true}).type('97810');
+        cy.get(this.dropdownCptSelector).each(() => {
+            cy.contains('Acupuncture').first().should('be.visible').click({force:true});
+        })
+        cy.get(this.billingInfoSaveSelector).click();
+        cy.contains('The changes have been saved').should('be.visible')
+        cy.get(this.receivePaymentSelector).click();
+        //Receive payment window
+        cy.get(this.payerTypeSelector).should('be.visible').click();
+
+        cy.get('.js-receivePaymentForm').within(() => {
+            cy.contains('li', 'Patient').within(() => {
+                cy.get('a').click();
+            });
+
+            cy.get(this.methodTypeSelector).should('be.visible').click();
+            cy.contains('li', 'Credit/Debit Card').within(() => {
+                cy.get('a').click();
+            });
+
+            cy.get(this.listCardSavedSelector).should('be.visible').click();
+            cy.contains('li', 'Card-4422').within(() => {
+                cy.get('a').click();
+            });
+            cy.get(this.chargeCardSelector).should('be.visible').click()
+
+        });
+        cy.wait(500).get(this.applyCurrentVisitSelector).should('be.visible').click();
+
+        cy.get('.form-control.js-amountApplied.js-amountAppliedServices.text-right').scrollIntoView().should('be.visible').click().type('1');
+        cy.get(this.saveButtonPaymentModalSelector).should('be.visible').click();
+        // cy.wait(500).get(this.applyCurrentVisitSelector).should('be.visible').click();
+
+    }
+
 
     createClaim():void {
         this.selectFirstPatientByDate();

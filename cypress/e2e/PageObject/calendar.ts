@@ -1,4 +1,5 @@
 /// <reference types="cypress" />
+/// <reference types="cypress-xpath" />
 
 import {
     PP_API,
@@ -19,7 +20,6 @@ const { uniqueNamesGenerator, Config, adjectives, colors } = require('unique-nam
 export const confirm = Math.floor(Math.random() * 22)
 
 class Calendar extends BasePage {
-
     public plusButton: string = '.c-flyout';
     public flyOutSelectorElement: string = '.flyout__entry-name';
     public iconSelectorPreBooking: string = '.dx-dropdowneditor-icon';
@@ -36,6 +36,9 @@ class Calendar extends BasePage {
     public selectService: string = '.dx-item-content.dx-list-item-content'
     public chatButton: string = '.o-button.o-button--classicsimple.edit-appointment__footer-action.dx-button.dx-button-normal.dx-button-mode-contained.dx-widget.dx-button-has-text.ng-star-inserted';
     public saveButtonAppointmentWindow : string = '.o-button.o-button--classic.create-appointment__footer-action.dx-button.dx-button-normal.dx-button-mode-contained.dx-widget.dx-button-has-text'
+    public cancelAppointmentFrameSelector: string = '.o-button.o-button--cancel.event-popup__footer-action.dx-button.dx-button-normal.dx-button-mode-contained.dx-widget.dx-button-has-text.ng-star-inserted.dx-state-hover'
+    public cancelAppointmentButtonSelector: string = '.o-button.o-button--classic.cancel-appointment-footer-action.dx-button.dx-button-normal.dx-button-mode-contained.dx-widget'
+
 // @ts-ignore
     createNewAppointmentASAP(): void{
         cy.get(this.plusButton).click();
@@ -253,6 +256,146 @@ class Calendar extends BasePage {
         cy.get(this.dropDownArrow).eq(3).click();
         cy.get(this.itemFromList).eq(0).click();
 
+        this.addNewCardinAppointmentWindow();
+
+        cy.intercept('https://staging.unifiedpractice.com/Public/coreapi/api/scheduling/calendar/events/appointments/scheduling-conflicts').as('conflictIntercept')
+        cy.get(this.saveButtonAppointmentWindow).scrollIntoView().should('be.visible').click()
+        cy.wait('@conflictIntercept').then((interception) => {
+            if (interception) {
+                cy.get('body').then($box => {
+                    const conflictExists = $box.text().includes('Continue and Save');
+                    if (conflictExists) {
+                        cy.contains('Continue and Save').click();
+                    }
+                });
+            }
+        })
+
+        cy.contains('Appointment successfully updated').should('be.visible');
+        cy.get(this.arrowMenu).should('be.visible').click()
+
+    }
+
+    createNewAppointmentExistingCard(): void{
+        cy.get(this.plusButton).click();
+        cy.intercept('https://data.pendo.io/data/guide.js/**').as('modalCalendarIntercept')
+        cy.get(this.flyOutSelectorElement).eq(0).click({force:true});
+        cy.wait('@modalCalendarIntercept')
+        cy.get(this.iconSelectorPreBooking).eq(0).click({force:true});
+        cy.get(this.dateFieldToday).click();
+        cy.get(this.iconSelectorPreBooking).eq(1).click();
+        cy.get(this.hourSelectorinDropDown).eq(Math.floor(Math.random() * 4)+1).click()
+        cy.intercept('https://staging.unifiedpractice.com/Public/coreapi/api/clinic/patients?**').as('listPatientIntercept')
+        cy.get(this.inputField).eq(2).click().type('Alexandru Cristian')
+        cy.wait('@listPatientIntercept')
+        cy.get(this.patientFromList).eq(0).click()
+        //Calendar appointment window
+
+        //Select service dropdown
+        cy.get(this.dropDownArrow).eq(2).click({force:true})
+        cy.get(this.selectService).eq(0).click({force:true})
+
+        cy.contains('Reason For Visit').next().click().type('test')
+        cy.get('.o-switch').eq(0).click()
+        cy.get(this.dropDownArrow).eq(3).click();
+        cy.get(this.itemFromList).eq(0).click();
+
+        cy.get('.dx-texteditor-input-container').eq(12).scrollIntoView().should('be.visible').click();
+        cy.contains('div.dx-template-wrapper.dx-item-content.dx-list-item-content', 'MASTERCARD 4422 (12/2025)').should('be.visible').click()
+
+        cy.intercept('https://staging.unifiedpractice.com/Public/coreapi/api/scheduling/calendar/events/appointments/scheduling-conflicts').as('conflictIntercept')
+        cy.get(this.saveButtonAppointmentWindow).scrollIntoView().should('be.visible').click()
+        cy.wait('@conflictIntercept').then((interception) => {
+            if (interception) {
+                cy.get('body').then($box => {
+                    const conflictExists = $box.text().includes('Continue and Save');
+                    if (conflictExists) {
+                        cy.contains('Continue and Save').click();
+                    }
+                });
+            }
+        })
+
+        cy.contains('Appointment successfully updated').should('be.visible');
+        cy.get(this.arrowMenu).should('be.visible').click()
+
+    }
+
+    createandCancelAppointmentwithCCPE(): void {
+        cy.get(this.plusButton).click();
+        cy.intercept('https://data.pendo.io/data/guide.js/**').as('modalCalendarIntercept')
+        cy.get(this.flyOutSelectorElement).eq(0).click({force:true});
+        cy.wait('@modalCalendarIntercept')
+        cy.get(this.iconSelectorPreBooking).eq(0).click({force:true});
+        cy.get(this.dateFieldToday).click();
+        cy.get(this.iconSelectorPreBooking).eq(1).click();
+        cy.get(this.hourSelectorinDropDown).eq(Math.floor(Math.random() * 40)+1).click()
+        cy.intercept('https://staging.unifiedpractice.com/Public/coreapi/api/clinic/patients?**').as('listPatientIntercept')
+        cy.get(this.inputField).eq(2).click().type('Alexandru Cristian')
+        cy.wait('@listPatientIntercept')
+        cy.get(this.patientFromList).eq(0).click()
+        //Calendar appointment window
+
+        //Select service dropdown
+        cy.get(this.dropDownArrow).eq(2).click({force:true})
+        cy.contains('div.dx-item.dx-list-item', 'Automation CCPE')
+            .should('be.visible')
+            .click();
+
+        cy.contains('Reason For Visit').next().click().type('test')
+        cy.get('.o-switch').eq(0).click()
+        cy.get(this.dropDownArrow).eq(3).click();
+        cy.get(this.itemFromList).eq(0).click();
+
+        cy.get('.dx-texteditor-input-container').eq(12).scrollIntoView().should('be.visible').click();
+        cy.contains('div.dx-template-wrapper.dx-item-content.dx-list-item-content', 'MASTERCARD 4422 (12/2025)').should('be.visible').click()
+
+        cy.intercept('https://staging.unifiedpractice.com/Public/coreapi/api/scheduling/calendar/events/appointments/scheduling-conflicts').as('conflictIntercept')
+        cy.get(this.saveButtonAppointmentWindow).scrollIntoView().should('be.visible').click()
+        cy.wait('@conflictIntercept').then((interception) => {
+            if (interception) {
+                cy.get('body').then($box => {
+                    const conflictExists = $box.text().includes('Continue and Save');
+                    if (conflictExists) {
+                        cy.contains('Continue and Save').click();
+                    }
+                });
+            }
+        })
+
+        cy.get('div[aria-label="Work Week (M-F)"]').should('be.visible').click();
+
+        cy.contains('div.dx-item', 'Daily')
+            .should('be.visible')
+            .click()
+
+        this.hideCancelledAppointments();
+
+        cy.contains('span', 'Alexandru Cristian, Automation CCPE').eq(0).click({force:true});
+
+        cy.contains('dx-button', 'Cancel Appointment')
+            .should('be.visible')
+            .click();
+
+        cy.get(this.cancelAppointmentButtonSelector).should('be.visible').click();
+
+        cy.contains('Appointment has been cancelled').should('be.visible')
+
+    }
+
+    hideCancelledAppointments(): void{
+        cy.get('dx-check-box')
+            .then($checkbox => {
+                const isChecked = $checkbox.attr('aria-checked') === 'true'; // Verificăm dacă este bifat
+                if (isChecked) {
+                    cy.wrap($checkbox).click();
+                } else {
+                    cy.log('Elementul este deja debifat.');
+                }
+            });
+    }
+
+    addNewCardinAppointmentWindow(): void{
         //Start manipulate iframe from Fullsteam
         cy.get('.dx-texteditor-input-container').eq(12).scrollIntoView().should('be.visible').click();
         cy.contains('Add new card').should('be.visible').click({force:true})
@@ -285,24 +428,7 @@ class Calendar extends BasePage {
         cy.intercept('https://hostedpayments-ext.fullsteampay.net/hostedcontrols/CardDetails').as('responseFromFullsteamIntercept')
         cy.get('#fullsteam-submit-button').should('be.visible').click()
         cy.wait('@responseFromFullsteamIntercept')
-
-
-        cy.intercept('https://staging.unifiedpractice.com/Public/coreapi/api/scheduling/calendar/events/appointments/scheduling-conflicts').as('conflictIntercept')
-        cy.get(this.saveButtonAppointmentWindow).scrollIntoView().should('be.visible').click()
-        cy.wait('@conflictIntercept').then((interception) => {
-            if (interception) {
-                cy.get('body').then($box => {
-                    const conflictExists = $box.text().includes('Continue and Save');
-                    if (conflictExists) {
-                        cy.contains('Continue and Save').click();
-                    }
-                });
-            }
-        })
-
-        cy.contains('Appointment successfully updated').should('be.visible');
     }
-
 
     checkForConflicts():void{
         cy.get('body').then($box => {
@@ -313,10 +439,6 @@ class Calendar extends BasePage {
             }
         )
     }
-
-
-
-
 
 
 }

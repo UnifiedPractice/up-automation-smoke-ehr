@@ -25,3 +25,13 @@
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 
 import 'cypress-iframe';
+require('cypress-xpath');
+
+
+
+Cypress.Commands.add('getIframe', (iframeSelector) => {
+    return cy.get(iframeSelector)
+        .its('0.contentDocument.body')
+        .should('not.be.empty')
+        .then(cy.wrap);
+});
