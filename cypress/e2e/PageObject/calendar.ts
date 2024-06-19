@@ -244,9 +244,15 @@ class Calendar extends BasePage {
     }
 
     bookTimeOff (name: string): void{
+        const randomName = this.generateRandomString(10);
+        setThisTestFirstName(randomName);
+        const bookTimeOffName = getThisTestFirstName();
         cy.get(this.plusButton).click();
         cy.get(this.flyOutSelectorElement).eq(1).click();
-        cy.get('input.dx-texteditor-input[type="text"][autocomplete="off"]:eq(0)').click().type(name);
+        cy.get('input.dx-texteditor-input[type="text"][autocomplete="off"]:eq(0)').click().type(bookTimeOffName);
+        cy.get('.book-timeoff__container .row.ng-star-inserted dx-tag-box .dx-texteditor-input-container.dx-tag-container.dx-native-click').click();
+        cy.get('div.dx-list-select-all-checkbox').click();
+        cy.get('input.dx-texteditor-input[type="text"][autocomplete="off"]:eq(0)').click()
         cy.get('div.dx-button-normal.dx-button-mode-contained.dx-widget.dx-dropdowneditor-button[role="button"][aria-label="Select"]:eq(0)').click();
         cy.get('td.dx-calendar-cell.dx-calendar-today.dx-calendar-contoured-date').click();
         cy.get('input.dx-texteditor-input[type="text"][autocomplete="off"]:eq(3)').click().type('12:00').wait(500);
@@ -258,7 +264,8 @@ class Calendar extends BasePage {
         }
 
     editTimeOff (name: string): void{
-        cy.get('.upscheduler__app-desc-transposed').contains(name).click();
+        const bookTimeOffName = getThisTestFirstName();
+        cy.get('.upscheduler__app-desc-transposed').contains(bookTimeOffName).click();
         cy.get('button.event-popup__top-actionsbtn:has(i.material-icons:contains("edit"))').click();
         cy.get('input.dx-texteditor-input[type="text"][autocomplete="off"]:eq(3)').click().clear().type('12:15').wait(500);
         cy.get('span.dx-button-text').contains('Update Time-Off').click();
@@ -266,29 +273,37 @@ class Calendar extends BasePage {
         }
 
     cancelTimeOff (name: string): void{
-        cy.get('.upscheduler__app-desc-transposed').contains(name).click();
+        const bookTimeOffName = getThisTestFirstName();
+        cy.get('.upscheduler__app-desc-transposed').contains(bookTimeOffName).click();
         cy.get('button.event-popup__top-actionsbtn:has(i.material-icons:contains("edit"))').click();
         cy.contains('Cancel Time off').click();
         cy.contains('Yes').click();
         }
 
     bookTimeOffRepeat (name: string): void{
+        const randomName = this.generateRandomString(10);
+        setThisTestFirstName(randomName);
+        const bookTimeOffName = getThisTestFirstName();
         cy.get(this.plusButton).click();
         cy.get(this.flyOutSelectorElement).eq(1).click();
         cy.get('input.dx-texteditor-input[type="text"][autocomplete="off"]:eq(0)').click().type(name);
+        cy.get('.book-timeoff__container .row.ng-star-inserted dx-tag-box .dx-texteditor-input-container.dx-tag-container.dx-native-click').click();
+        cy.get('div.dx-list-select-all-checkbox').click();
+        cy.get('input.dx-texteditor-input[type="text"][autocomplete="off"]:eq(0)').click()
         cy.get('div.dx-button-normal.dx-button-mode-contained.dx-widget.dx-dropdowneditor-button[role="button"][aria-label="Select"]:eq(0)').click();
         cy.get('td.dx-calendar-cell.dx-calendar-today.dx-calendar-contoured-date').click();
-        cy.get('input.dx-texteditor-input[type="text"][autocomplete="off"]:eq(3)').click().type('2:00').wait(500);
+        cy.get('input.dx-texteditor-input[type="text"][autocomplete="off"]:eq(3)').click().type('2:00').wait(1000);
         cy.get('div.dx-button-normal.dx-button-mode-contained.dx-widget.dx-dropdowneditor-button[role="button"][aria-label="Select"]:eq(3)').click();
         cy.get('div.dx-item-content.dx-list-item-content').contains('Location 1').click();
-        cy.get('input.dx-texteditor-input[type="text"][autocomplete="off"]:eq(4)').click().type('2:30').wait(500);
-        cy.get('label.o-switch').trigger('mouseover').wait(100).click();
+        cy.get('input.dx-texteditor-input[type="text"][autocomplete="off"]:eq(4)').click().type('2:30').wait(1000);
+        cy.get('label.o-switch').trigger('mouseover').wait(300).click();
         cy.get('span.dx-button-text').contains('Book Time-Off').click();
         cy.get('div.toast.toast-success').should('be.visible');
         }
 
     editTimeOffRepeat (name: string): void{
-        cy.get('.upscheduler__app-desc-transposed').contains(name).click();
+        const bookTimeOffName = getThisTestFirstName();
+        cy.get('.upscheduler__app-desc-transposed').contains(bookTimeOffName).click();
         cy.get('button.event-popup__top-actionsbtn:has(i.material-icons:contains("edit"))').click();
         cy.get('input.dx-texteditor-input[type="text"][autocomplete="off"]:eq(3)').click().clear().type('2:15').wait(500);
         cy.get('span.dx-button-text').contains('Update Time-Off').click();
@@ -296,17 +311,20 @@ class Calendar extends BasePage {
         }
 
     cancelTimeOff1By1 (name: string): void{
+        const randomName = this.generateRandomString(10);
+        setThisTestFirstName(randomName);
+        const bookTimeOffName = getThisTestFirstName();
         cy.get(this.plusButton).click();
         cy.get(this.flyOutSelectorElement).eq(1).click();
-        cy.get('input.dx-texteditor-input[type="text"][autocomplete="off"]:eq(0)').click().type(name);
+        cy.get('input.dx-texteditor-input[type="text"][autocomplete="off"]:eq(0)').click().type(bookTimeOffName);
         cy.get('div.dx-button-normal.dx-button-mode-contained.dx-widget.dx-dropdowneditor-button[role="button"][aria-label="Select"]:eq(0)').click();
         cy.get('td.dx-calendar-cell.dx-calendar-today.dx-calendar-contoured-date').click();
         cy.get('input.dx-texteditor-input[type="text"][autocomplete="off"]:eq(3)').click().type('5:00').wait(500);
         cy.get('div.dx-button-normal.dx-button-mode-contained.dx-widget.dx-dropdowneditor-button[role="button"][aria-label="Select"]:eq(3)').click();
         cy.get('div.dx-item-content.dx-list-item-content').contains('Location 1').click();
         cy.get('input.dx-texteditor-input[type="text"][autocomplete="off"]:eq(4)').click().type('5:30').wait(500);
-        cy.get('span.dx-button-text').contains('Book Time-Off').click().wait(1000);
-        cy.get('.upscheduler__app-desc-transposed').contains(name).click();
+        cy.get('span.dx-button-text').contains('Book Time-Off').click().wait(500);
+        cy.get('.upscheduler__app-desc-transposed').contains(bookTimeOffName).click();
         cy.get('button.event-popup__top-actionsbtn:has(i.material-icons:contains("edit"))').click();
         cy.contains('Cancel Time off').click();
         cy.contains('Yes').click();
@@ -314,6 +332,7 @@ class Calendar extends BasePage {
         }
 
     cancelTimeOffRepeat (name: string): void{
+            const bookTimeOffName = getThisTestFirstName();
             cy.get('.upscheduler__app-desc-transposed').contains(name).click();
             cy.get('button.event-popup__top-actionsbtn:has(i.material-icons:contains("edit"))').click();
             cy.contains('Cancel Time off').click();
@@ -322,7 +341,7 @@ class Calendar extends BasePage {
             }
 
     printStatement(): void {
-            cy.get(this.plusButton).click().wait(1000);
+            cy.get(this.plusButton).click().wait(500);
             cy.get(this.flyOutSelectorElement).eq(2).click();
             cy.get('div.dx-texteditor-input-container input.dx-texteditor-input:eq(0)').click();
             cy.get('span.dx-checkbox-icon:eq(1)').click();
