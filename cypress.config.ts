@@ -19,6 +19,7 @@ export default defineConfig({
         'cypress/e2e/Tests/Reports/*.spec.ts',
         'cypress/e2e/Tests/Calendar/*.spec.ts',
         'cypress/e2e/Tests/Patient List/*.spec.ts',
+        'cypress/e2e/Tests/Admin Accounts/*.spec.ts'
         ]
   },
 })

@@ -24,7 +24,7 @@ describe('Automation test for UP-1259', () => {
         navigate.extendMenu();
         navigate.selectCalendar();
 
-        calendar.cancelTimeOff1By1('REPEAT1');
+        calendar.cancelTimeOff1By1();
 
 
     })

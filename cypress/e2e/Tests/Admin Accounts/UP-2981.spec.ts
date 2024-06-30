@@ -24,8 +24,8 @@ describe('Automation test for UP-2981', () => {
         navigate.extendMenu();
         navigate.selectCalendar();
 
-        calendar.createNewAppointment('02:00 PM', 'Telehealth', 'test');
-        calendar.deleteAppointment('Telehealth');
+        calendar.createNewAppointment('02:00 PM', 'Telemed', 'test');
+        calendar.deleteAppointment('Telemed');
 
 
     })

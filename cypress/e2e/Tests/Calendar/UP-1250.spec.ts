@@ -24,7 +24,7 @@ describe('Automation test for UP-1250', () => {
         navigate.extendMenu();
         navigate.selectCalendar();
 
-        calendar.deleteAppointment1By1('06:00 PM', 'Automation without CCPE', 'test');
+        calendar.deleteAppointment1By1('06:00 PM', 'Automation Repeat', 'test');
 
 
     })

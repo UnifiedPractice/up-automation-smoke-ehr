@@ -22,9 +22,7 @@ describe('Automation test for UP-1228', () => {
         login.loginAutomation();
 
         navigate.extendMenu();
-        navigate.selectReports('Transactions By Date')
-        cy.contains('Current Month').click().wait(1000);
-        cy.contains('Current Year').click();
+        navigate.selectReports('Transactions By Date');
         basePage.exportElement();
 
     })

@@ -24,7 +24,7 @@ describe('Automation test for UP-2988', () => {
         navigate.extendMenu();
         navigate.selectCalendar();
 
-        calendar.cancelTimeOff1By1('REPEAT1');
+        calendar.cancelTimeOff1By1();
 
 
     })
